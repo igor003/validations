@@ -4,6 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
+      
         <img height='250' src="img/validation_devices.png" alt="">
     </div>
     <div class="row justify-content-center">
@@ -18,7 +19,7 @@
                 <tbody>
                     @foreach($device_types as $device_type)
                         <tr>
-                          <td class='text-center'><a href=""><button type="button" class="btn btn-outline-info">{{$device_type->name}}</button></a></td>
+                          <td class='text-center'><a href="/devices/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device_type->name}}</button></a></td>
                           <td class='text-center'>{{$device_type->periodicity}}</td>
                         </tr>
                     @endforeach

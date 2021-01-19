@@ -22,4 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'DeviceTypesController@show')->name('home');
+Route::get('/devices/{id}', 'DevicesController@show')->name('device_list');
 

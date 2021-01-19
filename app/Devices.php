@@ -1,0 +1,13 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Devices extends Model
+{
+    protected $table = 'devices';
+    protected $fillable = [
+        'id', 'id_type', 'number','serial_number','inventory_number','maker','model','status','start_date','next_valid_date',
+    ];
+}
