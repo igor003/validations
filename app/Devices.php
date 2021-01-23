@@ -10,4 +10,9 @@ class Devices extends Model
     protected $fillable = [
         'id', 'id_type', 'number','serial_number','inventory_number','maker','model','status','start_date','next_valid_date',
     ];
+
+     public function device_type(){
+        return $this->belongsTo('App\DeviceTypes');
+    }
+     
 }

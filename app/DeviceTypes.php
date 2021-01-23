@@ -10,5 +10,9 @@ class DeviceTypes extends Model
     protected $fillable = [
         'id', 'name','img_path', 'periodicity',
     ];
+
+    public function devices(){
+       return $this->hasMany('App/Devices', 'id_type', 'id');
+    }
 }
     
