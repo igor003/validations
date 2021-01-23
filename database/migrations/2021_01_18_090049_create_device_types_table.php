@@ -16,6 +16,7 @@ class CreateDeviceTypesTable extends Migration
         Schema::create('device_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
+            $table->text('img_apth')->nullable();
             $table->integer('periodicity');
             $table->timestamps();
         });

@@ -8,7 +8,7 @@ class DeviceTypes extends Model
 {
     protected $table = 'device_types';
     protected $fillable = [
-        'id', 'name', 'periodicity',
+        'id', 'name','img_path', 'periodicity',
     ];
 }
     

@@ -11,11 +11,8 @@
  
     </div>
     <div class="row justify-content-center">
-      @if($device_type->name == "miniaplicatoare")
-        <img height='250px'  src="{{ asset('img/miniaplicator.png') }}" alt="">
-      @elseif($device_type->name == "Presete")
-        <img height='250px'  src="{{ asset('img/preseta.jpg') }}" alt="">
-      @endif
+        <img height='250px'  src="{{ asset('storage/admin/'.$device_type->img_path) }}" alt="">
+   
       
     </div>
     <br>  
@@ -30,7 +27,7 @@
                       <th class='text-center' scope="col">Maker</th>
                       <th class='text-center' scope="col">Model</th>
                       <th class='text-center' scope="col">Start date</th>
-                       <th class='text-center' scope="col">Previos validation date</th>
+                      <th class='text-center' scope="col">Previos validation date</th>
                       <th class='text-center' scope="col">Next validation date</th>
                       <th class='text-center' scope="col">Status</th>
                     </tr>
