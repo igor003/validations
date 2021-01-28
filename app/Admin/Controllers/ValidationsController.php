@@ -69,25 +69,13 @@ class ValidationsController extends AdminController
      */
     protected function form()
     {
-         $devicess = Devices::with('device_type')->get();
-    
-        $data = array();
-        $cnt = 0;
-        foreach($devicess as $device){
-                  
-               $data[$cnt][] = $device->id;
-               $data[$cnt][]= $device->device_type->name . $device->number;
-               $cnt++;
-        } 
-
-        
+         
         $form = new Form(new Validations());
-
-        $form->number('id_device', __('Id device'));
-         $form->select('id_type')->options($data);
+        
+       $form->select('id_device')->options(Devices::all()->pluck('serial_number','id'));
         $form->text('executor', __('Executor'));
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
-        $form->text('validation_path', __('Validation path'));
+        $form->file('validation_path');
         $form->text('decision', __('Decision'));
         $form->number('id_user', __('Id user'));
 

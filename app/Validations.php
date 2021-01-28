@@ -11,8 +11,8 @@ class Validations extends Model
         'id', 'id_device','executor', 'start_date','validations_path','decision', 'id_user',''
     ];
 
- 	public function device(){
-        return $this->belongsTo('App\Device');
+ 	public function devices(){
+        return $this->belongsTo('App\Devices','id_device', 'id');
     }
      
 }
