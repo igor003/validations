@@ -14,5 +14,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('device_types', DeviceTypesController::class);
     $router->resource('devices', DevicesController::class);
+    $router->resource('validations', ValidationsController::class);
 
 });
+ 

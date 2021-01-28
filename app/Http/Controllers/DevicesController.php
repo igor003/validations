@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class DevicesController extends Controller
 {
     public function show($id){
-        $devices = Devices::where("type_id",$id);
+        $devices = Devices::where("id_type",$id)->get();
+       
         $device_type = DeviceTypes::find($id);
         return view('devices_list',['devices'=>$devices,'device_type'=>$device_type]);
     }
