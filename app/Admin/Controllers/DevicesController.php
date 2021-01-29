@@ -28,7 +28,13 @@ class DevicesController extends AdminController
         $grid = new Grid(new Devices());
 
         $grid->column('id', __('Id'));
-        $grid->column('id_type', __('Id type'));
+        // $grid->column('id_type', __('Id type'));
+
+        $grid->column('device_type', 'Device type')->display(function ($devices_type) {
+           
+            return "<span class='label label-warning'>{$devices_type['name']}</span>";
+        });
+
         $grid->column('number', __('Number'));
         $grid->column('serial_number', __('Serial number'));
         $grid->column('inventory_number', __('Inventory number'));
@@ -40,6 +46,16 @@ class DevicesController extends AdminController
         $grid->column('next_valid_date', __('Next valid date'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('number', 'like', "%{$this->input}%");
+            }, 'Number');
+        });
+         $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('serial_number', 'like', "%{$this->input}%");
+            }, 'Serial number');
+        });
 
         return $grid;
     }

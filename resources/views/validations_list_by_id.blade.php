@@ -29,15 +29,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                 
-                       <tr>
-                       
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                        </tr>
-                    
+                  @foreach($validations as $validation)
+                     <tr>
+                     
+                        <td class='text-center'>{{$validation->start_date}}</td>
+                        <td class='text-center'>{{$validation->executor}}</td>
+                        <td class='text-center'>{{$validation->decision}}</td>
+                        <td class='text-center'><a href="/valid_download/{{$validation->id}}"><img height=35px src="{{asset('img/download.png')}}" alt="download"></a></td>
+                      </tr>
+                  @endforeach
                  </tbody>
             </table>
         </div>

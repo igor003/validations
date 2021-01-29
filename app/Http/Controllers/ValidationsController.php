@@ -16,8 +16,18 @@ class ValidationsController extends Controller
         return view('validations_list_by_id',['validations'=>$validations,'device_info'=>$device_info]);
     }
 
-    public function create(Request $request){
-        //
+    public function download($id){
+        $validations = Validations::find($id);
+
+          $file = 'storage/admin/'.$validations->validation_path;
+
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-disposition' => 'attachment; filename=result',
+        ];
+
+        return response()->download($file,basename($validations->validation_path), $headers);
     }
 
     public function edit(Request $requestl){

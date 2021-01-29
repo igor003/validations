@@ -15,8 +15,8 @@ class Devices extends Model
         return $this->belongsTo('App\DeviceTypes','id_type', 'id');
     }
 
-    public function devices(){
-       return $this->hasMany('App/Validations', 'id_device', 'id');
+    public function validation(){
+       return $this->hasMany('App\Validations', 'id_device', 'id');
     }
      
 }

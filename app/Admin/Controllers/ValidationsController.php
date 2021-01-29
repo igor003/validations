@@ -28,6 +28,11 @@ class ValidationsController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('id_device', __('Id device'));
+        $grid->column('devices', 'Device serial')->display(function ($devices) {
+           
+            return "<span class='label label-warning'>{$devices['serial_number']}</span>";
+        });
+       
         $grid->column('executor', __('Executor'));
         $grid->column('start_date', __('Start date'));
         $grid->column('validation_path', __('Validation path'));
@@ -35,7 +40,14 @@ class ValidationsController extends AdminController
         $grid->column('id_user', __('Id user'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+        // $grid->filter(function($filter){
+        //     $filter->where(function ($query) {
 
+        //         $query->where('devices', 'like', "%{$this->input}%");
+                    
+
+        //     }, 'Text');
+        // });
         return $grid;
     }
 
