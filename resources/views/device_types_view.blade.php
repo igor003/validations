@@ -4,8 +4,13 @@
 
 <div class="container">
     <div class="row justify-content-center">
+     <div class='col-md-12 text-center'>
+        <h2><b>TYPES OF MACHINES AND EQUIPMENTS</b></h2>
+      </div> 
       
-        <img height='250' src="img/validation_devices.png" alt="">
+          <div class='col-md-12 text-center'>
+            <img height='250' src="img/validation_devices.png" alt="">
+        </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -20,7 +25,7 @@
                 <tbody>
                     @foreach($device_types_counts as $device_type_count)
                         <tr>
-                          <td class='text-center'><a href="/devices/{{$device_type_count['0']}}"><button type="button" class="btn btn-outline-info">{{$device_type_count['1']}}</button></a></td>
+                          <td class='text-center'><a href="/devices/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info">{{$device_type_count['1']}}</button></a></td>
                           <td class='text-center'>{{$device_type_count['2']}}</td>
                            <td class='text-center'>{{$device_type_count['3']}}</td>
                         </tr>
@@ -28,6 +33,6 @@
                  </tbody>
             </table>
         </div>
-    </div>
+    </div> 
 </div>
 @endsection

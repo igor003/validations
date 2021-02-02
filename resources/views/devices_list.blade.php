@@ -6,7 +6,15 @@
    
 
     <div class="row justify-content-center">
-       <h2>{{$device_type->name}}</h2>
+      <div class="col-md-2 text-left">
+          <a href="{{url()->previous()}}"><button class="btn btn-primary" type="submit">Back</button></a>
+       </div>
+        <div class="col-md-8 text-center">
+           <h2><b>MACHINES LIST: {{$device_type->name}} </b></h2>
+       </div>
+      <div class="col-md-2 text-right">
+          <a href="/home"><button class="btn btn-primary" type="submit">Home</button></a>
+       </div>
 
  
     </div>
@@ -26,10 +34,11 @@
                       <th class='text-center' scope="col">Inventory number</th>
                       <th class='text-center' scope="col">Maker</th>
                       <th class='text-center' scope="col">Model</th>
-                      <th class='text-center' scope="col">Start date</th>
-                      <th class='text-center' scope="col">Previos validation date</th>
+                      <th class='text-center' scope="col">Date of registration</th>
+                      <th class='text-center' scope="col">Last validation date</th>
                       <th class='text-center' scope="col">Next validation date</th>
                       <th class='text-center' scope="col">Status</th>
+                      <th class='text-center' scope="col">Note</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +58,9 @@
                               @if(date("Y-m-d")<$device['next_date'] && date("Y-m-d")<$device['range'])
                               <td class='text-center bg-success'>{{$device['next_date']}}</td>
                               @elseif(date("Y-m-d")<$device['next_date'] && date("Y-m-d")>$device['range'])
-                               <td class='text-center bg-warning'>{{$device['next_date']}}</td>
+                               <td class='text-center bg-warning '>{{$device['next_date']}}</td>
                               @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'])
-                              <td class='text-center bg-danger'>{{$device['next_date']}}</td>
+                              <td class='text-center bg-danger '>{{$device['next_date']}}</td>
                               @else
                               <td class='text-center bg-danger'>{{$device['next_date']}}</td>
                               @endif
@@ -59,8 +68,9 @@
                            @else
                            <td class='text-center bg-danger'>{{$device['next_date']}}</td>
                           <td class='text-center'>{{$device['status']}}</td>
+                          
                         @endif
-
+                          <td class='text-center'>{{$device['note']}}</td>
 
 
                         </tr>

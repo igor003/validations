@@ -30,24 +30,18 @@ class ValidationsController extends AdminController
         $grid->column('id_device', __('Id device'));
         $grid->column('devices', 'Device serial')->display(function ($devices) {
            
-            return "<span class='label label-warning'>{$devices['serial_number']}</span>";
+            return "{$devices['serial_number']}";
         });
        
         $grid->column('executor', __('Executor'));
+        $grid->column('type', __('Type'));
         $grid->column('start_date', __('Start date'));
         $grid->column('validation_path', __('Validation path'));
         $grid->column('decision', __('Decision'));
-        $grid->column('id_user', __('Id user'));
+      
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        // $grid->filter(function($filter){
-        //     $filter->where(function ($query) {
-
-        //         $query->where('devices', 'like', "%{$this->input}%");
-                    
-
-        //     }, 'Text');
-        // });
+        
         return $grid;
     }
 
@@ -64,10 +58,11 @@ class ValidationsController extends AdminController
         $show->field('id', __('Id'));
         $show->field('id_device', __('Id device'));
         $show->field('executor', __('Executor'));
+        $show->field('type', __('Type'));
         $show->field('start_date', __('Start date'));
         $show->field('validation_path', __('Validation path'));
         $show->field('decision', __('Decision'));
-        $show->field('id_user', __('Id user'));
+       
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -84,12 +79,15 @@ class ValidationsController extends AdminController
          
         $form = new Form(new Validations());
         
-       $form->select('id_device')->options(Devices::all()->pluck('serial_number','id'));
+        $form->select('id_device','Device serial number')->options(Devices::all()->pluck('serial_number','id'));
         $form->text('executor', __('Executor'));
+        
+        $form->select('type')->options(['Initial' => 'Initial', 'Ordinary' => 'Ordinary','Extraordinary' => 'Extraordinary',]);
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->file('validation_path');
-        $form->text('decision', __('Decision'));
-        $form->number('id_user', __('Id user'));
+        $form->select('decision','Decision')->options(['Ok' => 'OK', 'KO' => 'KO',]);
+      
+       
 
         return $form;
     }

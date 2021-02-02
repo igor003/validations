@@ -32,7 +32,7 @@ class DevicesController extends AdminController
 
         $grid->column('device_type', 'Device type')->display(function ($devices_type) {
            
-            return "<span class='label label-warning'>{$devices_type['name']}</span>";
+            return "{$devices_type['name']}";
         });
 
         $grid->column('number', __('Number'));
@@ -41,6 +41,7 @@ class DevicesController extends AdminController
         $grid->column('maker', __('Maker'));
         $grid->column('model', __('Model'));
         $grid->column('status', __('Status'));
+        $grid->column('note', __('Note'));
         $grid->column('start_date', __('Start date'));
         $grid->column('prev_valid_date', __('Prev valid date'));
         $grid->column('next_valid_date', __('Next valid date'));
@@ -56,6 +57,7 @@ class DevicesController extends AdminController
                 $query->where('serial_number', 'like', "%{$this->input}%");
             }, 'Serial number');
         });
+          
 
         return $grid;
     }
@@ -78,6 +80,7 @@ class DevicesController extends AdminController
         $show->field('maker', __('Maker'));
         $show->field('model', __('Model'));
         $show->field('status', __('Status'));
+        $show->field('note', __('Note'));
         $show->field('start_date', __('Start date'));
         $show->field('prev_valid_date', __('Prev valid date'));
         $show->field('next_valid_date', __('Next valid date'));
@@ -103,7 +106,10 @@ class DevicesController extends AdminController
         $form->text('inventory_number', __('Inventory number'));
         $form->text('maker', __('Maker'));
         $form->text('model', __('Model'));
-        $form->text('status', __('Status'));
+        // $form->text('status', __('Status'));
+
+        $form->select('status','Status')->options(['Production' => 'Production', 'Reserve' => 'Reserve','Send' => 'Send',]);
+        $form->text('note', __('Note'));
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->date('prev_valid_date', __('Prev valid date'))->default(date('Y-m-d'));
         $form->date('next_valid_date', __('Next valid date'))->default(date('Y-m-d'));

@@ -29,6 +29,7 @@ class DevicesController extends Controller
             $devices[$cnt]['model'] = $cur_device->model;
             $devices[$cnt]['start_date'] = $cur_device->start_date;
             $devices[$cnt]['status'] = $cur_device->status;
+            $devices[$cnt]['note'] = $cur_device->note;
             
             if($max_date == NULL){
                 $devices[$cnt]['prev_date'] = '---';
