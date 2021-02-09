@@ -15,6 +15,8 @@ Route::group([
     $router->resource('device_types', DeviceTypesController::class);
     $router->resource('devices', DevicesController::class);
     $router->resource('validations', ValidationsController::class);
+    $router->resource('type-mentenances', TypeMentenanceController::class);
+    $router->resource('type-interventions', TypeInterventionController::class);
 
 });
  

@@ -12,7 +12,7 @@ use DateInterval;
 class DevicesController extends Controller
 {
     public function show($id){
-        $devices_collect = Devices::where("id_type",$id)->get();
+        $devices_collect = Devices::where("id_type",$id)->orderBy('id', 'asc')->get();
         $devices = array();
         $cnt = 0;
         foreach($devices_collect as $cur_device){
@@ -55,7 +55,10 @@ class DevicesController extends Controller
         $device_type = DeviceTypes::find($id);
         return view('devices_list',['devices'=>$devices,'device_type'=>$device_type]);
     }
-
+    public function type_inregistration_view($id)
+    {
+        return view('type_inregistration',['id'=>$id]);
+    }
     public function create()
     {
         //

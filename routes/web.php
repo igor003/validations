@@ -23,5 +23,9 @@ Auth::routes();
 
 Route::get('/home', 'DeviceTypesController@show')->name('home');
 Route::get('/devices/{id}', 'DevicesController@show')->name('device_list');
+
+Route::get('/type_inegistration/{id}','DevicesController@type_inregistration_view')->name('type_intreg');
+
 Route::get('/device/validation/{id}', 'ValidationsController@show')->name('device_valid');
 Route::get('/valid_download/{id}','ValidationsController@download')->name('validation_download');
+Route::get('/add_intervention','InterventionsController@index')->name('add_interv');

@@ -9,7 +9,7 @@
       </div> 
       
           <div class='col-md-12 text-center'>
-            <img height='250' src="img/validation_devices.png" alt="">
+            <img height='200' src="img/approved.png" alt="">
         </div>
     </div>
     <div class="row justify-content-center">
@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach($device_types_counts as $device_type_count)
                         <tr>
-                          <td class='text-center'><a href="/devices/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info">{{$device_type_count['1']}}</button></a></td>
+                          <td class='text-center'><a href="/type_inegistration/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info">{{$device_type_count['1']}}</button></a></td>
                           <td class='text-center'>{{$device_type_count['2']}}</td>
                            <td class='text-center'>{{$device_type_count['3']}}</td>
                         </tr>
