@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interventions;
 use Illuminate\Http\Request;
-
+use App\TypeMentenance;
 class InterventionsController extends Controller
 {
     /**
@@ -14,7 +14,8 @@ class InterventionsController extends Controller
      */
     public function index()
     {
-        return view ('add_intervention');
+        $type_mentenance = TypeMentenance::all();
+        return view ('add_intervention',['types_mentenance'=>$type_mentenance]);
     }
 
     /**

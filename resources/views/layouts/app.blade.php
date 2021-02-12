@@ -6,23 +6,18 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
- 
-<!-- jQuery library -->
-
-    <!-- Scripts -->
-   <script src="{{ asset('js/custome.js') }}" ></script>
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custome.css') }}" rel="stylesheet">
-    
+      <link href="{{ asset('datetimepicker/jquery.datetimepicker.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('js/custome.js') }}" ></script>
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <script src="{{ asset('datetimepicker/jquery.datetimepicker.full.js') }}"></script>
+  
 </head>
 <body>
     <div id="app">

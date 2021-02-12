@@ -7,18 +7,29 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
            <form>
+            
               <div class="form-group">
-                <label for="exampleFormControlInput1">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <label for="datepicker">Select date</label>
+                <input id="datepicker" type="text" class="form-control ">
+               
+              </div>
+              
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select type of mentenance</label>
+                <select name='type_mentenance' class="form-control" id="exampleFormControlSelect1">
+                    <option value ='' selected></option>
+                  @foreach($types_mentenance as $type_mentenance)
+                      <option value="{{$type_mentenance->id}}">{{ $type_mentenance->name}}</option>
+                  @endforeach
+                </select>
               </div>
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                <label for="exampleFormControlSelect1">Select intervention</label>
+                <select name='type_mentenance' class="form-control" id="exampleFormControlSelect1">
+                    <option value ='' selected></option>
+                  @foreach($types_mentenance as $type_mentenance)
+                      <option value="{{$type_mentenance->id}}">{{ $type_mentenance->name}}</option>
+                  @endforeach
                 </select>
               </div>
            <div class="input-group date">
