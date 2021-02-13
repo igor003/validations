@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 use App\Validations;
 use App\Devices;
 use App\DeviceTypes;
@@ -59,9 +60,13 @@ class DevicesController extends Controller
     {
         return view('type_inregistration',['id'=>$id]);
     }
-    public function create()
+
+    public function get_by_id_type(Request $request)
     {
-        //
+
+        $machines_by_type = Devices::where('id_type','=',$request->id)->get();
+
+        return Response::json($machines_by_type);
     }
 
     public function edit(Devices $devices)

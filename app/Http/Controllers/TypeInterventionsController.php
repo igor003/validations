@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Interventions;
+use App\TypeInterventions;
+use App\DeviceTypes;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\TypeMentenance;
-class InterventionsController extends Controller
+class TypeInterventionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,8 @@ class InterventionsController extends Controller
     public function index()
     {
         $type_mentenance = TypeMentenance::all();
-        return view ('add_intervention',['types_mentenance'=>$type_mentenance]);
+        $types_machines = DeviceTypes::all();
+        return view ('add_intervention',['types_mentenance'=>$type_mentenance,'device_types'=>$types_machines]);
     }
 
     /**
@@ -23,9 +25,12 @@ class InterventionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function list_by_machine_mentenance_type(Request $request)
     {
-        
+
+        $interventions_list = TypeInterventions::where('id_type','=',$request->id_mentenance)->where('id_device','=',$request->id_machine_type)->get();
+       
+        return Response::json($interventions_list);
     }
 
     /**

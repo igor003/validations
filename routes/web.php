@@ -28,4 +28,6 @@ Route::get('/type_inegistration/{id}','DevicesController@type_inregistration_vie
 
 Route::get('/device/validation/{id}', 'ValidationsController@show')->name('device_valid');
 Route::get('/valid_download/{id}','ValidationsController@download')->name('validation_download');
-Route::get('/add_intervention','InterventionsController@index')->name('add_interv');
+Route::get('/add_intervention','TypeInterventionsController@index')->name('add_interv');
+Route::post('/devices_list_by_type','DevicesController@get_by_id_type')->name('dev_by_type');
+Route::post('/interventions_list','TypeInterventionsController@list_by_machine_mentenance_type');
