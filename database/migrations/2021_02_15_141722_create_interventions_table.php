@@ -20,8 +20,8 @@ class CreateInterventionsTable extends Migration
             $table->integer('id_machine');
             $table->integer('id_type');
             $table->time('duration');
-            $table->string('report_path', 200);
-            $table->string('note', 500);
+            $table->string('report_path', 200)->nullable();;
+            $table->string('note', 500)->nullable();;
             $table->timestamps();
         });
     }
