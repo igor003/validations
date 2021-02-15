@@ -8,7 +8,7 @@ class Interventions extends Model
 {
     protected $table = 'interventions';
     protected $fillable = [
-        'id','id_type','id_device','name'
+        'id','date','id_type_mentenance','id_machine','id_type','durations', 'report_path_','note'
     ];
 
 }

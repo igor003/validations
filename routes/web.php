@@ -31,3 +31,4 @@ Route::get('/valid_download/{id}','ValidationsController@download')->name('valid
 Route::get('/add_intervention','TypeInterventionsController@index')->name('add_interv');
 Route::post('/devices_list_by_type','DevicesController@get_by_id_type')->name('dev_by_type');
 Route::post('/interventions_list','TypeInterventionsController@list_by_machine_mentenance_type');
+// Route::post('/inreg_interventions','InterventionInterventionController@create')->name('create_interv')

@@ -17,6 +17,7 @@ Route::group([
     $router->resource('validations', ValidationsController::class);
     $router->resource('type-mentenances', TypeMentenanceController::class);
     $router->resource('type-interventions', TypeInterventionController::class);
+    $router->resource('interventions', InterventionController::class);
 
 });
  
