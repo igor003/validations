@@ -13,7 +13,7 @@ class StoreInterventionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,9 +30,10 @@ class StoreInterventionRequest extends FormRequest
             'intervention' =>'required',
             'duration' =>'required',
             
-
-
-
         ];
     }
+
+  
+
+  
 }

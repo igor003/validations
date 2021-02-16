@@ -4,17 +4,34 @@
 
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-md-8">
+		<div class="col-md-3">	
+		@if ($errors->any())
+			<div id='card' class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+	  			<div class=" text-center card-header">ERROR</div>
+	  			<div class="card-body text-center">
+	    		     <p class="card-text">
+	    				@foreach ($errors->all() as $error)
+      						{{ $error }}<br> <hr>
+						@endforeach
+  		             </p>
+	  			</div>
+			</div>	
+		@endif
+		</div>
+		<div class="col-md-6">
 			<form action="/inreg_interventions" method="POST" enctype="multipart/form-data">      
 				<div class="form-group">
 					<label for="datepicker">Select date</label>
-					<input name='date' id="datepicker" type="text" class="form-control ">
+					<input value='{{old("date")}}' name='date' id="datepicker" type="text" class="form-control ">
 				</div>
 				<div class="form-group">
 					<label for="type_mentenance">Select type of mentenance</label>
 					<select name='type_mentenance' class="form-control" id="type_mentenance">
-							<option value ='' selected></option>
+							<option value ='{{old("type_mentenance")}}' selected></option>
 						@foreach($types_mentenance as $type_mentenance)
+						@if($type_mentenance->id == old("type_mentenance") )
+								<option selected value="{{$type_mentenance->id}}">{{$type_mentenance->name}}</option>
+						@endif
 								<option value="{{$type_mentenance->id}}">{{$type_mentenance->name}}</option>
 						@endforeach
 					</select>
@@ -42,32 +59,27 @@
 				</div>
 				 <div class="form-group">
 						<label for="timepicker">Enter duration of intervention ( hour:minute )</label>
-						<input name='duration' id="timepicker" type="text" class="form-control ">
+						<input value="{{old('duration')}}" name='duration' id="timepicker" type="text" class="form-control ">
 				</div> 
-<!-- 				<div class="for-group">
-					 <label for="inputGroupFile01">Upload report</label><br>
-					<div class="input-group mb-3">
-					    <input name='report' type="file" class="custom-file-input" id="inputGroupFile01">
-					    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-					</div>
-				</div>   -->
-        <div class=" form-group ">
-          <div class="file-field">
-            <label for="document">RNC Document</label><br>
-              <a class="btn-floating peach-gradient mt-0 float-left">
-                <i class="fas fa-paperclip" aria-hidden="true"></i>
-                <input name='report' type="file">
-              </a>
-          </div>
-        </div>
+		        <div class=" form-group ">
+		          <div class="file-field">
+		            <label for="document">Report</label><br>
+		              <a class="btn-floating peach-gradient mt-0 float-left">
+		                <i class="fas fa-paperclip" aria-hidden="true"></i>
+		                <input name='report' type="file">
+		              </a>
+		          </div>
+		        </div>
 				<div class="form-group">
 					<label for="type_mcahine">Note</label>
-					<textarea name='note' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+					<textarea name='note' class="form-control" id="exampleFormControlTextarea1" rows="3">{{old("note")}}</textarea>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-outline-success btn-lg btn-block">Submit</button>
 				</div>
 			</form>
+		</div>
+		<div class="col-md-3">	
 		</div>
 	</div> 
 </div>

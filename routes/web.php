@@ -32,3 +32,4 @@ Route::get('/add_intervention','InterventionsController@index')->name('add_inter
 Route::post('/devices_list_by_type','DevicesController@get_by_id_type')->name('dev_by_type');
 Route::post('/interventions_list','TypeInterventionsController@list_by_machine_mentenance_type');
 Route::post('/inreg_interventions','InterventionsController@store')->name('create_interv');
+Route::post('/interventions_list/{id}','InterventionsController@show')->name('interv_list')
