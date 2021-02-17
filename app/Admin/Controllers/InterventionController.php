@@ -30,6 +30,7 @@ class InterventionController extends AdminController
         $grid->column('date', __('Date'));
         $grid->column('id_type_mentenance', __('Id type mentenance'));
         $grid->column('id_machine', __('Id machine'));
+        $grid->column('id_type_machine',__('Id type machine'))
         $grid->column('id_type', __('Id type'));
         $grid->column('duration', __('Duration'));
         $grid->column('report_path', __('Report path'));
@@ -54,6 +55,7 @@ class InterventionController extends AdminController
         $show->field('date', __('Date'));
         $show->field('id_type_mentenance', __('Id type mentenance'));
         $show->field('id_machine', __('Id machine'));
+        $show->field('id_type_machine', __('Id type machine'));
         $show->field('id_type', __('Id type'));
         $show->field('duration', __('Duration'));
         $show->field('report_path', __('Report path'));
@@ -76,6 +78,7 @@ class InterventionController extends AdminController
         $form->date('date', __('Date'))->default(date('Y-m-d'));
         $form->number('id_type_mentenance', __('Id type mentenance'));
         $form->number('id_machine', __('Id machine'));
+        $form->number('id_type_machine', __('Id type machine'));
         $form->number('id_type', __('Id type'));
         $form->time('duration', __('Duration'))->default(date('H:i:s'));
         $form->text('report_path', __('Report path'));

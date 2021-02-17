@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach($device_types_counts as $device_type_count)
                         <tr>
-                          <td class='text-center'><a href="/type_inegistration/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info">{{$device_type_count['1']}}</button></a></td>
+                          <td class='text-center'><a href="/type_inregistration/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info">{{$device_type_count['1']}}</button></a></td>
                           <td class='text-center'>{{$device_type_count['2']}}</td>
                            <td class='text-center'>{{$device_type_count['3']}}</td>
                         </tr>

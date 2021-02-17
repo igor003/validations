@@ -17,6 +17,7 @@ class CreateInterventionsTable extends Migration
             $table->bigIncrements('id');
             $table->date('start_date');
             $table->integer('id_type_mentenance');
+            $table->integer('id_type_machine');
             $table->integer('id_machine');
             $table->integer('id_type');
             $table->time('duration');

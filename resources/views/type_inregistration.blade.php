@@ -37,8 +37,8 @@
   </div>
   <br>
    <div>
-     <a href="devices/{{$id}}">
-      <button type="button" class="btn btn-primary btn-lg btn-block"> <h3>Mentenance</h3></button>
+     <a href="/interventions_list/{{$id}}">
+      <button type="button" class="btn btn-primary btn-lg btn-block"> <h3>Maintenance</h3></button>
     </a> 
    </div>
     
