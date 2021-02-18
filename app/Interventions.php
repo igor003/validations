@@ -26,8 +26,22 @@ class Interventions extends Model
         return $this->belongsTo('App\TypeInterventions','id_type', 'id');
     }
 
-     public function scopeLinks($query)
-    {
+    public function scopeLinks($query){
         return $query->with('type_mentenance','device_type','device','user','intervention');
+    }
+
+    public function scopeUser($query,$id){
+        return $query->where('id_user','=',$id);
+    }
+
+    public function scopeMaintenance($query,$id){
+        return $query->where('id_type_mentenance','=',$id);
+    }
+    public function scopeMachine($query,$id){
+        return $query->where('id_machine','=',$id);
+    }
+
+    public function scopeDate($query, $date_from , $date_to){
+        return $query->whereBetween('date', [$date_from, $date_to]);
     }
 }
