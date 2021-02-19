@@ -47,15 +47,20 @@
             
         </div>
         <div class="col-md-2"> 
+       
         <div class="form-group">
           <div class="form-check ">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Time intervention summ
+            <input class="form-check-input" type="checkbox" value='0' id="flexCheckDefault">
+            <label class="form-check-label"  for="flexCheckDefault">
+              Time interventions summ
             </label>
           </div>
-
         </div> 
+         <div id='card2' class="form-group">
+          <div  class="card text-white bg-info mb-3" style="max-width: 18rem;">
+            <div id='sum_time' class=" text-center card-header">Sum of time</div>
+          </div>
+        </div>
           <div class="form-group">
             <label for="filter_interv">Select date from</label>
             <input value='{{old("date_timepicker_start")}}' name='date_timepicker_start' id="date_timepicker_start" type="text" class="form-control ">

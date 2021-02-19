@@ -30,7 +30,7 @@ class InterventionController extends AdminController
         $grid->column('date', __('Date'));
         $grid->column('id_type_mentenance', __('Id type mentenance'));
         $grid->column('id_machine', __('Id machine'));
-        $grid->column('id_type_machine',__('Id type machine'))
+        $grid->column('id_type_machine',__('Id type machine'));
         $grid->column('id_type', __('Id type'));
         $grid->column('duration', __('Duration'));
         $grid->column('report_path', __('Report path'));

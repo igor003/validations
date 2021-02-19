@@ -13,6 +13,7 @@ use DateInterval;
 class DevicesController extends Controller
 {
     public function show($id){
+
         $devices_collect = Devices::where("id_type",$id)->orderBy('id', 'asc')->get();
         $devices = array();
         $cnt = 0;

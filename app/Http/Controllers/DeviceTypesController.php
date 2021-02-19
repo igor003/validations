@@ -8,7 +8,7 @@ use App\Devices;
 class DeviceTypesController extends Controller
 {
     public function show (Request $request){
-
+   
     	
     	$device_types = DeviceTypes::all();
     	$dev_types_count =array();

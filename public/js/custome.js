@@ -3,7 +3,18 @@
 $( function() {
 
     document.body.style.zoom = "80%";
-  
+    $('#card2').hide();
+    $("#flexCheckDefault").on('click',function(){
+        if($(this).val() == '0'){
+            $(this).val(1);
+        }else{
+             $(this).val(0);
+        }
+        
+    });
+    
+   
+
     $('#datepicker').datetimepicker({
                     format:'Y-m-d H:i:s',
                     timepicker:false,
@@ -19,16 +30,14 @@ $( function() {
         defaultTime:'00:00'
     });
 
-    $('#type_machine,#type_mentenance').on('change',function(e){
+    $('#type_machine,#type_mentenance').on('change',function(e){    
         e.preventDefault();
         var type_id = $('#type_machine').val();
         var type_mentenance = $('#type_mentenance').val();
-        console.log(type_mentenance == '');
-        console.log(type_id == '');
+        
         if(type_id == '' && type_mentenance == ''){
             $("intervention").attr('disabled','disabled');
             $("devices").attr('disabled','disabled');
-            
         }
     
         $.ajax({
@@ -66,16 +75,47 @@ $( function() {
     })
     $('#type_mentenance_filter').on('change',function(e){
         e.preventDefault();
-        $('#intervention_filter').removeAttr('disabled');
+        
+        var type_mentenance = $('#type_mentenance_filter').val();
+        var type_machine = $('#id_type_machine').val();
+        $.ajax({
+            url: '/interventions_list',
+            type: 'POST',
+            dataType: 'json',
+            data:{
+                id_mentenance:type_mentenance,
+                id_machine_type:type_machine
+            },
+            success: function(data){
+                console.log(data);  
+                $('#intervention_filter').empty();
+                $('#intervention_filter').removeAttr('disabled');
+                 $('#intervention_filter').append("<option selected='selected' value=''></option>");
+                var i = 0;
+                while(i < data.length){
+                        $('#intervention_filter').append("<option value="+data[i].id+">"+ data[i].name+"</option>");
+                        i++;
+                }
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
     });
 
-    $('#user,#type_mentenance_filter,#devices_filter').on('change', function(e){
+    $('#user,#type_mentenance_filter,#devices_filter,#intervention_filter,#flexCheckDefault').on('change', function(e){
         e.preventDefault();
          get_interventions_list();
     });
     $('#type_mentenance, #type_machine').on('change', function(e){
         e.preventDefault();
-
         var type_mentenance = $('#type_mentenance').val();
         var type_machine = $('#type_machine').val();
         if(type_mentenance && type_machine){
@@ -88,7 +128,7 @@ $( function() {
                 },
                 dataType:'json',
                 success: function(data){
-                    console.log(data);
+                  
                     $('#intervention').empty();
                     $('#intervention').removeAttr('disabled');
                     $('#devices').removeAttr('disabled');
@@ -158,6 +198,8 @@ function get_interventions_list(){
     var device = $('#devices_filter').val();
     var start_date = $('#date_timepicker_start').val();
     var end_date = $('#date_timepicker_end').val();
+    var type_interv = $('#intervention_filter').val();
+    var time = $("#flexCheckDefault").val();
     $.ajax({
         url: '/get_interventions',
         type: 'POST',
@@ -168,19 +210,26 @@ function get_interventions_list(){
             id_mentenance:type_mentenance,
             id_device:device,
             start_date:start_date,
-            end_date:end_date
+            end_date:end_date,
+            type_interv:type_interv,
+            time:time
         },
         success: function(data){
-        
+            console.log(data);
+            if(data['0'] != null){
+                $('#card2').show();
+                $('#sum_time').html("Sum of time: "+data['0']);
+            }else{
+                $('#sum_time').html("");
+                 $('#card2').hide();
+            }
             $('#interventions_table').empty();
             var i = 0;
             var time_intervention;
-            while(i< data.length){
-                $('#interventions_table').append(generate_hnml_interventions(data[i]));
-                  console.log(new DateTime(data[i].duration));
+            while(i< data['1'].length){
+                $('#interventions_table').append(generate_hnml_interventions(data['1'][i]));
                 i++;
             }
-          
         }
     })
     .done(function() {

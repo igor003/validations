@@ -47,7 +47,7 @@ class InterventionsController extends Controller
 
     public function get_by_machine_type_id( Request $request )
     {
-        $interventions = Interventions::where('id','>','0');
+        $interventions = Interventions::where('id_type_machine','=',$request->id);
         if($request->user != ''){
             $interventions->user($request->user);
         }
@@ -60,9 +60,37 @@ class InterventionsController extends Controller
         if($request->start_date !='' && $request->end_date !=''){
             $interventions->date($request->start_date,$request->end_date);
         }
-      
-        
-        return Response::json($interventions->where('id_type_machine','=',$request->id)->links()->orderBy('date','Desc')->get());
+        if($request->type_interv != ''){
+            $interventions->intervention($request->type_interv);        
+        }
+        if($request->time != '0'){
+            $arr = array();
+            foreach($interventions->get() as $intervention){
+                $arr[] = $intervention->duration;
+            }
+            $temp_value = null;
+            $seconds = 0;
+            $minutes = 0;
+            $hours = 0;
+            foreach ($arr as $value) {
+                $temp_value = explode(':', $value);
+                $hours += $temp_value[0];
+                $minutes += $temp_value[1];
+                $seconds += $temp_value[2];
+            }
+                while ($minutes >= 60) {
+                $hours++;
+                $minutes -= 60;
+            }
+            $res_time = str_pad($hours, 2, 0, STR_PAD_LEFT) . ':' . str_pad($minutes, 2, 0, STR_PAD_LEFT). ':' . str_pad($seconds, 2, 0, STR_PAD_LEFT);
+        }else{
+            $res_time = null;
+        }
+       
+       
+
+
+        return Response::json([$res_time,$interventions->links()->orderBy('date','Desc')->get()]);
     }
 
     public function show($id)

@@ -33,6 +33,9 @@ class Interventions extends Model
     public function scopeUser($query,$id){
         return $query->where('id_user','=',$id);
     }
+    public function scopeIntervention($query,$id){
+        return $query->where('id_type','=',$id);
+    }
 
     public function scopeMaintenance($query,$id){
         return $query->where('id_type_mentenance','=',$id);
@@ -40,7 +43,6 @@ class Interventions extends Model
     public function scopeMachine($query,$id){
         return $query->where('id_machine','=',$id);
     }
-
     public function scopeDate($query, $date_from , $date_to){
         return $query->whereBetween('date', [$date_from, $date_to]);
     }
