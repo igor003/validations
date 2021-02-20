@@ -63,7 +63,7 @@ $( function() {
         e.preventDefault();
         $('#date_timepicker_end').removeAttr('disabled');
 
-    })
+    });
     $('#date_timepicker_end').on('change',function(e){
         e.preventDefault();
             get_interventions_list();
@@ -72,7 +72,7 @@ $( function() {
            get_interventions_list();
 
         })
-    })
+    });
     $('#type_mentenance_filter').on('change',function(e){
         e.preventDefault();
         
@@ -107,7 +107,6 @@ $( function() {
         .always(function() {
             console.log("complete");
         });
-        
     });
 
     $('#user,#type_mentenance_filter,#devices_filter,#intervention_filter,#flexCheckDefault').on('change', function(e){
@@ -128,14 +127,13 @@ $( function() {
                 },
                 dataType:'json',
                 success: function(data){
-                  
                     $('#intervention').empty();
                     $('#intervention').removeAttr('disabled');
                     $('#devices').removeAttr('disabled');
                     var i = 0;
                     while(i < data.length){
-                            $('#intervention').append("<option selected='selected' value="+data[i].id+">"+ data[i].name+"</option>");
-                            i++;
+                        $('#intervention').append("<option selected='selected' value="+data[i].id+">"+ data[i].name+"</option>");
+                        i++;
                     }
                 }   
             });
@@ -180,7 +178,7 @@ function generate_hnml_interventions(data){
              if(data.report_path != null){
                 result +='<td class="text-center">' +
                 '<form method="POST" action="/download_interv_report">'+
-                ' <input type="hidden" name="path" value="'+data.report_path+'">'+
+                ' <input type="hidden" name="report_path" value="'+data.report_path+'">'+
                 '<button type="submit"><img height="40px" width = "40px" src="/img/download.png" alt=""></button>'+
                 '</form>' +
                 '</td>'

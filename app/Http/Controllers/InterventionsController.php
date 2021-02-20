@@ -102,4 +102,13 @@ class InterventionsController extends Controller
         $users = User::all();
         return view('interventions_list',['users'=>$users,'types_mentenance'=>$type_mentenance,'devices'=>$diveces,'id'=>$id,'type_machine'=>$type_machine]);
     }
+    public function download_report (Request $request){
+
+        $file = 'storage/admin/files/reports/'.basename($request->report_path);
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-disposition' => 'attachment; filename=result',
+        ];
+        return response()->download($file,basename($request->report_path), $headers);
+    }
 }

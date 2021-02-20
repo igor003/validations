@@ -34,3 +34,4 @@ Route::post('/interventions_list','TypeInterventionsController@list_by_machine_m
 Route::post('/inreg_interventions','InterventionsController@store')->name('create_interv');
 Route::get('/interventions_list/{id}','InterventionsController@show')->name('interv_list');
 Route::post('/get_interventions', 'InterventionsController@get_by_machine_type_id')->name('get_interv');
+Route::post('/download_interv_report','InterventionsController@download_report')->name('rep_download');
