@@ -58,8 +58,27 @@ $( function() {
         })
     });
 
-    
-     $('#date_timepicker_start').on('change',function(e){
+    $('#date_timepicker_excell_start').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                maxDate:jQuery('#date_timepicker_excell_end').val()?jQuery('#date_timepicker_excell_end').val():false
+            })
+        },
+        timepicker:false
+    });
+    $('#date_timepicker_excell_end').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                minDate:jQuery('#date_timepicker_excell_start').val()?jQuery('#date_timepicker_excell_start').val():false
+            })
+        },
+        timepicker:false,
+        maxDate:'0'//tomorrow is maximum date calendar
+    });
+
+    $('#date_timepicker_start').on('change',function(e){
         e.preventDefault();
         $('#date_timepicker_end').removeAttr('disabled');
 

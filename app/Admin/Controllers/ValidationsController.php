@@ -41,7 +41,14 @@ class ValidationsController extends AdminController
       
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('type', 'like', "%{$this->input}%");
+            }, 'Type');
+        });
+         $grid->filter(function($filter){
+            $filter->equal('start_date')->date();
+        });
         return $grid;
     }
 

@@ -35,3 +35,6 @@ Route::post('/inreg_interventions','InterventionsController@store')->name('creat
 Route::get('/interventions_list/{id}','InterventionsController@show')->name('interv_list');
 Route::post('/get_interventions', 'InterventionsController@get_by_machine_type_id')->name('get_interv');
 Route::post('/download_interv_report','InterventionsController@download_report')->name('rep_download');
+Route::get('/interv_excell_report','InterventionsController@report_generate_view')->name('interv_report_view');
+Route::post('/generate_interv_excell_report','InterventionsController@generate_report')->name('generate_report_excell');
+Route::post('/gener_excell_rep_filter','InterventionsController@filter_excell_report')->name('filter_excell_report');

@@ -33,6 +33,9 @@ class Interventions extends Model
     public function scopeUser($query,$id){
         return $query->where('id_user','=',$id);
     }
+    public function scopeMachineType($query,$id){
+    	return $query->where('id_type_machine','=',$id);
+    }
     public function scopeIntervention($query,$id){
         return $query->where('id_type','=',$id);
     }

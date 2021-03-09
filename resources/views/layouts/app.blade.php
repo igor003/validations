@@ -33,12 +33,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav-item navbar-nav navbar-center vertical-center">
+                    <ul class="navbar-nav">
                         @guest
                         @else
-                        <li class="nav-item">
-                            <a  href="/add_intervention">Add intervention</a>
+                        <li class="nav-item ">
+                            <a class='nav-link'  href="/add_intervention">Add intervention</a>
                         </li>
+
+                        <li class='nav-item'>    
+                            <a class='nav-link' href="/interv_excell_report">Report_interventions</a>
+                        </li>   
                         @endguest
 
                         

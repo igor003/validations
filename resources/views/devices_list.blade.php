@@ -30,8 +30,9 @@
                 <thead>
                     <tr>
                       <th class='text-center' scope="col">Number</th>
+                       <th class='text-center' scope="col">Inventory number</th>
                       <th class='text-center' scope="col">Serial number</th>
-                      <th class='text-center' scope="col">Inventory number</th>
+                     
                       <th class='text-center' scope="col">Maker</th>
                       <th class='text-center' scope="col">Model</th>
                       <th class='text-center' scope="col">Date of registration</th>
@@ -48,8 +49,8 @@
                    
                        <tr>
                           <td class='text-center'><a href="/device/validation/{{$device['id']}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
-                          <td class='text-center'>{{$device['serial_number']}}</td>
                           <td class='text-center'>{{$device['inventory_number']}}</td>
+                          <td class='text-center'>{{$device['serial_number']}}</td>
                           <td class='text-center'>{{$device['maker']}}</td>
                           <td class='text-center'>{{$device['model']}}</td>
                           <td class='text-center'>{{$device['start_date']}}</td>
