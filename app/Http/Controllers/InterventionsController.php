@@ -129,26 +129,29 @@ class InterventionsController extends Controller
         // Вставляем текст в ячейку A1
         $objDrawing = new PHPExcel_Worksheet_Drawing();
         $objDrawing->setName('test_img');
+        $objDrawing->setResizeProportional(false);  
         $objDrawing->setDescription('test_img');
         $objDrawing->setPath('img/SAMMY_logo.jpg');
         $objDrawing->setCoordinates('A1');                      
         //setOffsetX works properly
-        $objDrawing->setOffsetX(7); 
-        $objDrawing->setOffsetY(7);                
+        $objDrawing->setOffsetX(4); 
+        $objDrawing->setOffsetY(6);                
         //set width, height
-        // $objDrawing->setWidth(20); 
-        $objDrawing->setHeight(40); 
+        //$objDrawing->setWidth(163); 
+        $objDrawing->setWidth(50); 
+        $objDrawing->setHeight(45); 
         $objDrawing->setWorksheet($sheet);
 
 
         $sheet->setCellValue("A1", 'List of interventions ' );
-        $sheet->setCellValue("A2", 'Date');
-        $sheet->setCellValue("B2", 'Type mentenance ');
-        $sheet->setCellValue("C2", 'Serial number machine');
-        $sheet->setCellValue("D2", 'Type machine');
-        $sheet->setCellValue("E2", 'Duration intervention');
-        $sheet->setCellValue("F2", 'Note');
-        $sheet->setCellValue("G2", 'User');
+        $sheet->setCellValue("A2", 'Maked by:'.Auth::user()->name.'    Date:'.date('Y-m-d') );
+        $sheet->setCellValue("A3", 'Date');
+        $sheet->setCellValue("B3", 'Type mentenance ');
+        $sheet->setCellValue("C3", 'Serial number machine');
+        $sheet->setCellValue("D3", 'Type machine');
+        $sheet->setCellValue("E3", 'Duration intervention');
+        $sheet->setCellValue("F3", 'Note');
+        $sheet->setCellValue("G3", 'User');
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
@@ -157,18 +160,33 @@ class InterventionsController extends Controller
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getStyle('A1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-        $sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
-        $sheet->getStyle('A2')->getFill()->getStartColor()->setRGB('84, 157, 1');
-        $sheet->getStyle('B2')->getFill()->getStartColor()->setRGB('84, 157, 1');
-        $sheet->getStyle('C2')->getFill()->getStartColor()->setRGB('84, 157, 1');
-        $sheet->getStyle('D2')->getFill()->getStartColor()->setRGB('84, 157, 1');
+       
+        $bg = array(
+            'fill' => array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array('rgb' => '01B050')
+            )
+        );
+        $sheet->getStyle("A3:G3")->applyFromArray($bg);
+        $bg2 = array(
+            'fill' => array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array('rgb' => '0080ff')
+            ),
+            'borders'=>array(
+                'style' => PHPExcel_Style_Border::BORDER_THICK,
+                'color' => array('rgb' => '000000')
+            ),
+        );
+        $sheet->getStyle("A1")->applyFromArray($bg2);
         $sheet->getRowDimension(1)->setRowHeight(42);
-        $sheet->getRowDimension(2)->setRowHeight(25);
-        $rows = 3;
+        $sheet->getRowDimension(2)->setRowHeight(15);
+        $sheet->getRowDimension(3)->setRowHeight(20);
+        $rows = 4;
         $cnt = 0;
         $count_interv = count($interventions);
        
-        while($rows< $count_interv+3){
+        while($rows< $count_interv+4){
             $sheet->setCellValue('A'.$rows, $interventions[$cnt]->date);
             $sheet->setCellValue("B".$rows, $interventions[$cnt]->type_mentenance->name);
             $sheet->setCellValue("C".$rows, $interventions[$cnt]->device->serial_number);
@@ -177,7 +195,8 @@ class InterventionsController extends Controller
             $sheet->setCellValue("F".$rows, $interventions[$cnt]->note);
             $sheet->setCellValue("G".$rows, $interventions[$cnt]->user->name);
             $sheet->getRowDimension($rows)->setRowHeight(25);
-           
+
+            $sheet->getStyle('A3:G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('C'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -190,7 +209,21 @@ class InterventionsController extends Controller
         }
 // Объединяем ячейки
         $sheet->mergeCells('A1:G1');
-// Выравнивание текста
+         $sheet->mergeCells('A2:G2');
+        // Шрифт Times New Roman
+        $sheet->getStyle('A1')->getFont()->setName('Arial');
+        $sheet->getStyle('A2')->getFont()->setName('Arial');
+         
+        // Размер шрифта 18
+        $sheet->getStyle("A1")->getFont()->setSize(24);
+        $sheet->getStyle("A2")->getFont()->setSize(8);
+
+        // По центру
+        $sheet->getStyle("A1")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle("A1")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("A2")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle("A2")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        // Выравнивание текста
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('B2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -202,7 +235,7 @@ class InterventionsController extends Controller
 
        
         $xls->getActiveSheet()->getStyle(
-            'A2:' .$xls->getActiveSheet()->getHighestColumn().$xls->getActiveSheet()->getHighestRow()
+            'A1:' .$xls->getActiveSheet()->getHighestColumn().$xls->getActiveSheet()->getHighestRow()
         )->applyFromArray(array(
             'borders' => array(
                 'allborders' => array(
@@ -213,7 +246,7 @@ class InterventionsController extends Controller
        
         // заголовки
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Lista configuratiilor.xls"');
+        header('Content-Disposition: attachment;filename="Interventions list.xls"');
         header('Cache-Control: max-age=0');
 
 // Do your stuff here
