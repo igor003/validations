@@ -1,6 +1,29 @@
 
+   
+
+
 
 $( function() {
+    var input = $('.inputfile' );
+
+    var label    = input.next();
+    var labelVal = label.html();
+
+    input.on( 'change', function( e ){
+    
+       
+        // var pdffile_url=URL.createObjectURL(this.files[0]);
+  
+        // $('.ifrmae_Viewer').append('<iframe id="viewer" frameborder="0" scrolling="no" width="50%" height="250"></iframe>');
+        //   $('#viewer').attr('src',pdffile_url);
+      fileName = e.target.value.split( '\\' ).pop();
+        if( fileName )
+            label.html(fileName); 
+        else
+            label.innerHTML = labelVal;
+        $(this).css(' background-color','green')
+    });
+
 
     document.body.style.zoom = "80%";
     $('#card2').hide();

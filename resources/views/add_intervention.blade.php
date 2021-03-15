@@ -62,14 +62,15 @@
 						<input value="{{old('duration')}}" name='duration' id="timepicker" type="text" class="form-control ">
 				</div> 
 		        <div class=" form-group ">
+		        	<label for="timepicker">Report</label>
 		          <div class="file-field">
-		            <label for="document">Report</label><br>
-		              <a class="btn-floating peach-gradient mt-0 float-left">
-		                <i class="fas fa-paperclip" aria-hidden="true"></i>
-		                <input name='report' type="file">
-		              </a>
+		              	<input type="file" name="report" id="file" class="inputfile"/>
+						<label for="file"></span>Choose a file</label>
 		          </div>
 		        </div>
+		        <div class='ifrmae_Viewer' style="clear:both">
+         
+        		</div>
 				<div class="form-group">
 					<label for="type_mcahine">Note</label>
 					<textarea name='note' class="form-control" id="exampleFormControlTextarea1" rows="3">{{old("note")}}</textarea>

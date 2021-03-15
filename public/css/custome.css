@@ -7,3 +7,34 @@ text-decoration:none;
 	width:120px;
 	
 }
+.inputfile {
+	
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+
+}
+.inputfile + label {
+    font-size: 1em;
+    font-weight: 500;
+    color: black;
+    background-color: white;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+    padding:5px;
+    width:100%;
+    border:1px solid #ced4da;
+    border-radius: 0.25rem;
+        height: calc(1.6em + 0.75rem + 2px);
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: green;
+     color: white;
+}
+.inputfile + label {
+	
+}
