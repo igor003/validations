@@ -1,7 +1,4 @@
 
-   
-
-
 
 $( function() {
     var input = $('.inputfile' );
@@ -43,7 +40,7 @@ $( function() {
                     timepicker:false,
                     validateOnBlur:true,
                     lang:'ru',
-                    maxDate:'0'//tomorrow is maximum date calendar
+                    maxDate:'0'    //tomorrow is maximum date calendar
     });
 
     $('#timepicker').datetimepicker({

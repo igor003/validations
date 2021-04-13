@@ -19,7 +19,11 @@
 		@endif
 		</div>
 		<div class="col-md-6">
-			<form action="/inreg_interventions" method="POST" enctype="multipart/form-data">      
+		
+			<form  action="/inreg_interventions" method="POST" enctype="multipart/form-data"> 
+			
+			
+				     
 				<div class="form-group">
 					<label for="datepicker">Select date</label>
 					<input value='{{old("date")}}' name='date' id="datepicker" type="text" class="form-control ">
