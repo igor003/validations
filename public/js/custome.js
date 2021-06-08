@@ -222,7 +222,7 @@ function generate_hnml_interventions(data){
                 '</form>' +
                 '</td>'
              }else{
-                result += '<td class="text-center"><img height="40px" width = "40px" src="/img/error.jpg" alt=""></td>';
+                result += '<td class="text-center"><img height="50px" width = "50px" src="/img/error_file.png" alt=""></td>';
              }
         result +='</tr>';
     return result; 

@@ -49,13 +49,25 @@ class DevicesController extends AdminController
         $grid->column('updated_at', __('Updated at'));
         $grid->filter(function($filter){
             $filter->where(function ($query) {
-                $query->where('number', 'like', "%{$this->input}%");
-            }, 'Number');
+                $query->where('inventory_number', 'like', "%{$this->input}%");
+            }, 'Inventoru number');
         });
          $grid->filter(function($filter){
             $filter->where(function ($query) {
-                $query->where('serial_number', 'like', "%{$this->input}%");
-            }, 'Serial number');
+                $query->whereHas('device_type', function ($query) {
+                    $query->where('name','=', "{$this->input}");
+                });
+            }, 'Type machine');
+        });
+         $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('status', 'like', "%{$this->input}%");
+            }, 'Status');
+        });
+         $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('model', 'like', "%{$this->input}%");
+            }, 'Model');
         });
           
 

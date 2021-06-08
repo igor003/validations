@@ -14,7 +14,7 @@ class DevicesController extends Controller
 {
     public function show($id){
 
-        $devices_collect = Devices::where("id_type",$id)->orderBy('id', 'asc')->get();
+        $devices_collect = Devices::where("id_type",$id)->orderBy('inventory_number', 'DESC')->get();
         $devices = array();
         $cnt = 0;
         foreach($devices_collect as $cur_device){
@@ -49,7 +49,6 @@ class DevicesController extends Controller
 
             }
          
-            
             $devices[$cnt][] = $cur_device->status;
             $cnt++;
         }

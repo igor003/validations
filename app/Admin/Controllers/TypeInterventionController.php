@@ -40,7 +40,25 @@ class TypeInterventionController extends AdminController
         $grid->column('name', __('Name'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->where('name', 'like', "%{$this->input}%");
+            }, 'Name');
+        });
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->whereHas('device_type', function ($query) {
+                    $query->where('name','like', "%{$this->input}%");
+                });
+            }, 'Type device');
+        });
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->whereHas('type_mentenance', function ($query) {
+                    $query->where('name','like', "{$this->input}%");
+                });
+            }, 'Type mentenance');
+        });
         return $grid;
     }
 

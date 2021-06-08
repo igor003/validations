@@ -28,9 +28,9 @@ class ValidationsController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('id_device', __('Id device'));
-        $grid->column('devices', 'Device serial')->display(function ($devices) {
+        $grid->column('devices', 'Inventory number')->display(function ($devices) {
            
-            return "{$devices['serial_number']}";
+            return "{$devices['inventory_number']}";
         });
        
         $grid->column('executor', __('Executor'));
@@ -41,6 +41,14 @@ class ValidationsController extends AdminController
       
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+        $grid->filter(function($filter){
+            $filter->where(function ($query) {
+                $query->whereHas('devices', function ($query) {
+                    $query->where('inventory_number','=', "{$this->input}");
+                });
+            }, 'Inventory number');
+        });
+
         $grid->filter(function($filter){
             $filter->where(function ($query) {
                 $query->where('type', 'like', "%{$this->input}%");
@@ -86,10 +94,9 @@ class ValidationsController extends AdminController
          
         $form = new Form(new Validations());
         
-        $form->select('id_device','Device serial number')->options(Devices::all()->pluck('serial_number','id'));
+        $form->select('id_device','Device inventory number')->options(Devices::all()->pluck('inventory_number','id'));
         $form->text('executor', __('Executor'));
-        
-        $form->select('type')->options(['Initial' => 'Initial', 'Ordinary' => 'Ordinary','Extraordinary' => 'Extraordinary',]);
+        $form->select('type')->options(['Initial' => 'Initial', 'Ordinary' => 'Ordinary','Extraordinary' => 'Extraordinary','Predictive'=>'Predictive']);
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->file('validation_path');
         $form->select('decision','Decision')->options(['Ok' => 'OK', 'KO' => 'KO',]);

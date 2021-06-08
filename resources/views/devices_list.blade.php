@@ -37,7 +37,11 @@
                       <th class='text-center' scope="col">Model</th>
                       <th class='text-center' scope="col">Date of registration</th>
                       <th class='text-center' scope="col">Last validation date</th>
-                      <th class='text-center' scope="col">Next validation date</th>
+                      @if($device_type['periodicity'] == 0)
+
+                      @else
+                         <th class='text-center' scope="col">Next validation date</th>
+                      @endif
                       <th class='text-center' scope="col">Status</th>
                       <th class='text-center' scope="col">Note</th>
                     </tr>
@@ -46,34 +50,40 @@
                   
 
                    @foreach($devices as $device)
-                   
-                       <tr>
-                          <td class='text-center'><a href="/device/validation/{{$device['id']}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
-                          <td class='text-center'>{{$device['inventory_number']}}</td>
-                          <td class='text-center'>{{$device['serial_number']}}</td>
-                          <td class='text-center'>{{$device['maker']}}</td>
-                          <td class='text-center'>{{$device['model']}}</td>
-                          <td class='text-center'>{{$device['start_date']}}</td>
-                          <td class='text-center'>{{$device['prev_date']}}</td>
-                          @if($device['range'])
-                              @if(date("Y-m-d")<$device['next_date'] && date("Y-m-d")<$device['range'])
-                              <td class='text-center bg-success'>{{$device['next_date']}}</td>
-                              @elseif(date("Y-m-d")<$device['next_date'] && date("Y-m-d")>$device['range'])
-                               <td class='text-center bg-warning '>{{$device['next_date']}}</td>
-                              @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'])
-                              <td class='text-center bg-danger '>{{$device['next_date']}}</td>
-                              @else
-                              <td class='text-center bg-danger'>{{$device['next_date']}}</td>
-                              @endif
-                              <td class='text-center'>{{$device['status']}}</td>
-                           @else
-                           <td class='text-center bg-danger'>{{$device['next_date']}}</td>
-                          <td class='text-center'>{{$device['status']}}</td>
-                          
-                        @endif
-                          <td class='text-center'>{{$device['note']}}</td>
+          
+                        <tr>
 
-
+                            <td class='text-center'><a href="/device/validation/{{$device['id']}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
+                            <td class='text-center'>{{$device['inventory_number']}}</td>
+                            <td class='text-center'>{{$device['serial_number']}}</td>
+                            <td class='text-center'>{{$device['maker']}}</td>
+                            <td class='text-center'>{{$device['model']}}</td>
+                            <td class='text-center'>{{$device['start_date']}}</td>
+                            <td class='text-center'>{{$device['prev_date']}}</td>
+                            @if($device_type['periodicity'] == 0)
+                             
+                            @else
+                                @if($device['range'] && $device_type['periodicity'] > 0)
+                                    @if(date("Y-m-d")<$device['next_date'] && date("Y-m-d")<$device['range'])
+                                        <td class='text-center bg-success'>{{$device['next_date']}}</td>
+                                    @elseif(date("Y-m-d")<$device['next_date'] && date("Y-m-d")>$device['range'])
+                                        <td class='text-center bg-warning '>{{$device['next_date']}}</td>
+                                    @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'] && $device['status'] == 'Production')
+                                        <td class='text-center bg-danger '>{{$device['next_date']}}</td>
+                                    @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'] && ($device['status'] == 'Reserve' || $device['status'] == 'Send') )
+                                        <td class='text-center'>{{$device['next_date']}}</td>
+                                    @else
+                                        <td class='text-center bg-danger'>{{$device['next_date']}}</td>
+                                    @endif
+                                        
+                                @elseif($device['status'] == 'Reserve' || $device['status'] == 'Send')
+                                    <td class='text-center'>{{$device['next_date']}}</td>
+                                @else
+                                    <td class='text-center bg-danger'>{{$device['next_date']}}</td>
+                                @endif
+                            @endif
+                            <td class='text-center'>{{$device['status']}}</td>
+                            <td class='text-center'>{{$device['note']}}</td>
                         </tr>
                     @endforeach
                    

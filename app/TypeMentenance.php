@@ -11,5 +11,7 @@ class TypeMentenance extends Model
         'id', 'name',
     ];
 
-  
+   public function interventions(){
+       return $this->hasMany('App/TypeMentenance', 'id_type', 'id');
+    }
 }
