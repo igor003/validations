@@ -3,6 +3,19 @@
 @section('content')
 
 <div class="container">
+	    <div class="row justify-content-center">
+      <div class="col-md-2 text-left">
+          <a href="{{url()->previous()}}"><button class="btn btn-primary" type="submit">Back</button></a>
+       </div>
+        <div class="col-md-8 text-center">
+          
+       </div>
+      <div class="col-md-2 text-right">
+          <a href="/home"><button class="btn btn-primary" type="submit">Home</button></a>
+       </div>
+
+     
+    </div>
 	<div class="row justify-content-center">
 		<div class="col-md-3">	
 		@if ($errors->any())
@@ -20,9 +33,16 @@
 		</div>
 		<div class="col-md-6">
 		
-			<form  action="/inreg_interventions" method="POST" enctype="multipart/form-data"> 
-			
-			
+			<form  action="/inreg_interventions" method="POST" enctype="multipart/form-data"> 	
+				<div class="form-group">
+					<label for="type_mentenance">Select Executor</label>
+					<select name='executor' class="form-control" id="executor">
+						<option value ='{{old("executor")}}' selected></option>
+						@foreach($executors as $executor)
+							<option  value="{{$executor->id}}">{{$executor->name}}</option>
+						@endforeach
+					</select>
+				</div>
 				     
 				<div class="form-group">
 					<label for="datepicker">Select date</label>
@@ -43,7 +63,7 @@
 				<div class="form-group">
 					<label for="type_mcahine">Select type machine</label>
 					<select name='type_machine' class="form-control" id="type_machine">
-							<option value ='' selected></option>
+							<option value ="" selected></option>
 						@foreach($device_types as $type_device)
 								<option value="{{$type_device->id}}">{{$type_device->name}}</option>
 						@endforeach
@@ -54,12 +74,22 @@
 					<select disabled='disabled' name='device' class="form-control" id="devices">
 							<option value ='' selected></option>
 					</select>
+					<div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="" id="show_all">
+					  <label class="form-check-label" for="show_all">
+					    Show all
+					  </label>
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="type_mcahine">Select intervention</label>
 					<select disabled='disabled' name='intervention' class="form-control" id="intervention">
-							<option value ='' selected></option>
+							<option value ="" selected></option>
 					</select>
+				</div>
+				<div style="display:none" class="form-group count_pce">
+				
+				
 				</div>
 				 <div class="form-group">
 						<label for="timepicker">Enter duration of intervention ( hour:minute )</label>
@@ -75,6 +105,16 @@
 		        <div class='ifrmae_Viewer' style="clear:both">
          
         		</div>
+        		
+        <div style="display:none" class="form-group temperature">
+					<label for="temper">Temperature °C</label>
+					
+				</div>
+				<div style="display:none" class="form-group shuts">
+					<label for="temper">Nmb of shuts</label>
+					
+				</div>
+				
 				<div class="form-group">
 					<label for="type_mcahine">Note</label>
 					<textarea name='note' class="form-control" id="exampleFormControlTextarea1" rows="3">{{old("note")}}</textarea>

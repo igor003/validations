@@ -13,13 +13,18 @@
            <h2><b>INTERVENTIONS LIST: {{$type_machine->name}} </b></h2>
        </div>
       <div class="col-md-2 text-right">
-          <a href="/home"><button class="btn btn-primary" type="submit">Home</button></a>
+          <a href="/home"><button class="btn btn-primary mr-4" type="submit">Home</button></a>
+         <a href="/type_inregistration/{{$type_machine->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
+        
+         
        </div>
 
      
     </div>
-    <div class="row justify-content-center">
-         <img height='250px'  src="{{ asset('storage/admin/'.$type_machine->img_path) }}" alt="">
+    <div class="row justify-content-center">        
+      <img class='mr-4' height='250px'  src="{{ asset('storage/admin/'.$type_machine->img_path) }}" alt="">
+
+      <img  height='250px' src="{{asset('img/maintenance.png')}}" alt="">
     </div>
     <br>  
     <div class="row justify-content-center">
@@ -28,13 +33,20 @@
                 <thead>
                     <tr>
                       <th class='text-center' scope="col">Date</th>
-                      <th class='text-center' scope="col">Type</th>
                       <th class='text-center' scope="col">Inventory number</th>
+                      <th class='text-center' scope="col">Type</th>
+                      
                       <th class='text-center' scope="col">Intervention description</th>
                       <th class='text-center' scope="col">Duration</th>
                       <th class='text-center' scope="col">Note</th>
+                      @if($type_machine->id == 9)
+                        <th class='text-center' scope="col">Temperature</th>
+                      @endif
+                      @if($type_machine->id == 3)
+                        <th class='text-center' scope="col">Number of shuts</th>
+                      @endif
                       <th class='text-center' scope="col">Executor</th>
-                      <th class='text-center' scope="col">Download Report</th>
+                      <th class='text-center' scope="col">Optional attached file</th>
                     </tr>
                 </thead>
                 <tbody id='interventions_table'>
@@ -47,6 +59,12 @@
             
         </div>
         <div class="col-md-2"> 
+      
+
+          @if($type_machine->instruction_path)
+           <div class='text-center'><img height='140px' src="{{asset('img/mainten_instruction.png')}}" alt=""><br> <a href="/download__machine_instruction/{{$type_machine->id}}"><button class="btn btn-success" type="submit"> Download work instruction</button></a></div>
+           <br>
+           @endif
           <form action="/gener_excell_rep_filter" method='POST'>
             <div class="form-group">
               <div class="form-check ">

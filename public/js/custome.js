@@ -53,18 +53,31 @@ $( function() {
     $('#type_machine,#type_mentenance').on('change',function(e){    
         e.preventDefault();
         var type_id = $('#type_machine').val();
+
         var type_mentenance = $('#type_mentenance').val();
-        
+        var all_mini = $('#show_all').val();
         if(type_id == '' && type_mentenance == ''){
             $("intervention").attr('disabled','disabled');
             $("devices").attr('disabled','disabled');
         }
-    
+        if(type_id == 9){
+            $('.temperature').append('<input value="" name="temper" id="temperature" type="text" class="form-control ">')
+            $('.temperature').show();
+        }else{
+            $('.temperature').hide();
+        }
+        if(type_id == 3){
+            $('.shuts').append('<input value="" name="nmb_of_shuts" id="shuts" type="text" class="form-control ">')
+            $('.shuts').show();
+        }else{
+            $('.shuts').hide();
+        }
         $.ajax({
         url:'/devices_list_by_type',
         type:'POST',
         data:{
-            id:type_id
+            id:type_id,
+            all:all_mini
         },
         dataType:'json',
         success: function(data){
@@ -112,6 +125,36 @@ $( function() {
 
         })
     });
+
+
+    $('#intervention, #type_machine').on('change',function(){
+        var machine = $('#devices').val();
+        var type_id = $('#type_machine').val();
+        var interv = $('#intervention').val();
+        if(interv === '155' && type_id === '4'){
+            $.ajax({
+                url:'/machine_count',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    id_machine:machine,
+                },
+                   
+                success: function(data){
+                    $('.count_pce').empty();
+                    $('.count_pce').show();
+                    $('.count_pce').append('<label for="type_mcahine">Count of pices</label><input value="'+data+'" type="text" name="number_of_pices" class="form-control" id="nmb_of_pices">');
+                  
+                }   
+                });
+           }else{
+                $('.count_pce').empty();
+                $('.count_pce').hide();
+           }
+       
+
+    });
+
     $('#type_mentenance_filter').on('change',function(e){
         e.preventDefault();
         
@@ -129,11 +172,11 @@ $( function() {
                 console.log(data);  
                 $('#intervention_filter').empty();
                 $('#intervention_filter').removeAttr('disabled');
-                 $('#intervention_filter').append("<option selected='selected' value=''></option>");
+                $('#intervention_filter').append("<option selected='selected' value=''></option>");
                 var i = 0;
                 while(i < data.length){
-                        $('#intervention_filter').append("<option value="+data[i].id+">"+ data[i].name+"</option>");
-                        i++;
+                    $('#intervention_filter').append("<option value="+data[i].id+">"+ data[i].name+"</option>");
+                    i++;
                 }
             }
         })
@@ -150,9 +193,9 @@ $( function() {
 
     $('#user,#type_mentenance_filter,#devices_filter,#intervention_filter,#flexCheckDefault').on('change', function(e){
         e.preventDefault();
-         get_interventions_list();
+        get_interventions_list();
     });
-    $('#type_mentenance, #type_machine').on('change', function(e){
+    $('#type_mentenance, #type_machine,#devices').on('change', function(e){
         e.preventDefault();
         var type_mentenance = $('#type_mentenance').val();
         var type_machine = $('#type_machine').val();
@@ -163,15 +206,16 @@ $( function() {
                 data:{
                     id_mentenance:type_mentenance,
                     id_machine_type:type_machine
-                },
+                }, 
                 dataType:'json',
                 success: function(data){
                     $('#intervention').empty();
                     $('#intervention').removeAttr('disabled');
                     $('#devices').removeAttr('disabled');
+                    $('#intervention').append("<option selected='selected' value=''></option>");
                     var i = 0;
                     while(i < data.length){
-                        $('#intervention').append("<option selected='selected' value="+data[i].id+">"+ data[i].name+"</option>");
+                        $('#intervention').append("<option value="+data[i].id+">"+ data[i].name+"</option>");
                         i++;
                     }
                 }   
@@ -180,7 +224,7 @@ $( function() {
 
     });
 
-   if($('#card:visible')){
+    if($('#card:visible')){
         $('#card').delay(1800).slideUp();
     }
 
@@ -207,22 +251,37 @@ $( function() {
 
 function generate_hnml_interventions(data){
     var result = '<tr>' +
-        '<td class="text-center">'+data.date+'</td>'+
-        '<td class="text-center">'+data.type_mentenance.name+'</td>'+
+        '<td class="text-center">'+data.date.substring(0, 10)+'</td>'+
         '<td class="text-center">'+data.device.inventory_number+'</td>'+
+        '<td class="text-center">'+data.type_mentenance.name+'</td>'+
         '<td class="text-center">'+data.intervention.name+'</td>'+
-        '<td class="text-center">'+data.duration+'</td>'+
-        '<td class="text-center">'+data.note+'</td>'+
-        '<td class="text-center">'+data.user.name+'</td>';
+        '<td class="text-center">'+data.duration+'</td>';
+        if(data.note != null){
+                result +='<td class="text-center">'+data.note+'</td>';
+        }else{
+            result +='<td class="text-center">---</td>';
+        }
+        if(data['device_type']['id'] == 9){
+            result +='<td class="text-center">'+data.temper+'</td>';
+        }
+        if(data['device_type']['id'] == 3){
+            if(data.number_of_shuts != null){
+                result +='<td class="text-center">'+data.number_of_shuts+'</td>';
+            }else{
+                result +='<td class="text-center">---</td>';
+            }
+        }
+        
+       result+='<td class="text-center">'+data.user.name+'</td>';
              if(data.report_path != null){
                 result +='<td class="text-center">' +
                 '<form method="POST" action="/download_interv_report">'+
                 ' <input type="hidden" name="report_path" value="'+data.report_path+'">'+
-                '<button type="submit"><img height="40px" width = "40px" src="/img/download.png" alt=""></button>'+
+                '<button type="submit"><img height="60px" width = "50px" src="/img/skrepka.png" alt=""></button>'+
                 '</form>' +
                 '</td>'
              }else{
-                result += '<td class="text-center"><img height="50px" width = "50px" src="/img/error_file.png" alt=""></td>';
+                result += '<td class="text-center">---</td>';
              }
         result +='</tr>';
     return result; 
@@ -252,7 +311,7 @@ function get_interventions_list(){
             time:time
         },
         success: function(data){
-            console.log(data);
+           
             if(data['0'] != null){
                 $('#card2').show();
                 $('#sum_time').html("Sum of time: "+data['0']);

@@ -8,7 +8,7 @@ class Interventions extends Model
 {
     protected $table = 'interventions';
     protected $fillable = [
-        'id','date','id_type_mentenance','id_machine','id_type_machine','id_type','id_user','durations', 'report_path_','note'
+        'id','date','id_type_mentenance','id_machine','id_type_machine','id_type','id_user','durations','temper', 'report_path_','note','nmb_of_shuts', 'nmb_of_pices'
     ];
    	public function type_mentenance(){
         return $this->belongsTo('App\TypeMentenance','id_type_mentenance', 'id');
@@ -25,11 +25,9 @@ class Interventions extends Model
     public function intervention(){
         return $this->belongsTo('App\TypeInterventions','id_type', 'id');
     }
-
     public function scopeLinks($query){
         return $query->with('type_mentenance','device_type','device','user','intervention');
     }
-
     public function scopeUser($query,$id){
         return $query->where('id_user','=',$id);
     }
@@ -39,7 +37,6 @@ class Interventions extends Model
     public function scopeIntervention($query,$id){
         return $query->where('id_type','=',$id);
     }
-
     public function scopeMaintenance($query,$id){
         return $query->where('id_type_mentenance','=',$id);
     }

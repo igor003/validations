@@ -24,7 +24,8 @@ class InterventionsController extends Controller
     {
         $type_mentenance = TypeMentenance::all();
         $types_machines = DeviceTypes::all();
-        return view ('add_intervention',['types_mentenance'=>$type_mentenance,'device_types'=>$types_machines]);
+        $executors = User::where('status','=','user')->get();
+        return view ('add_intervention',['types_mentenance'=>$type_mentenance,'device_types'=>$types_machines,'executors'=>$executors]);
     }
 
     public function store(StoreInterventionRequest $request)
@@ -41,9 +42,26 @@ class InterventionsController extends Controller
         $intervention->id_type_machine = $request->type_machine;
         $intervention->id_type = $request->intervention; 
         $intervention->duration = $request->duration;
-        $intervention->id_user =  Auth::user()->id;
+        // $intervention->id_user =  Auth::user()->id;
+        $intervention->id_user =  $request->executor;
         if($request->report !=''){
             $intervention->report_path = $path ;
+        }
+        if($request->temper !=''){
+            $intervention->temper = $request->temper;
+        }else{
+            $intervention->temper = NULL;
+        }
+        if($request->number_of_pices !=''){
+            $intervention->nmb_of_pices = $request->number_of_pices;
+        }else{
+            $intervention->nmb_of_pices = NULL;
+        }
+        
+        if($request->nmb_of_shuts !=''){
+            $intervention->nmb_of_shuts = $request->nmb_of_shuts;
+        }else{
+            $intervention->nmb_of_shuts =NULL;
         }
         $intervention->note = $request->note;
         $intervention->save();
@@ -51,6 +69,7 @@ class InterventionsController extends Controller
          return redirect(route('interv_list',['id'=>$request->type_machine]));
     }
     public function get_interventins($id_type_divice,$id_user,$id_mentenance,$id_device,$start_date,$end_date,$type_interv,$time,$json){
+
         $interventions = Interventions::where('id_type_machine','=',$id_type_divice);
         if($id_user != ''){
             $interventions->user($id_user);
@@ -90,19 +109,15 @@ class InterventionsController extends Controller
         }else{
             $res_time = null;
         }
-       
-       
-
         if($json){
-            return Response::json([$res_time,$interventions->links()->orderBy('date','Desc')->get()]);
+            return Response::json([$res_time,$interventions->links()->orderBy('date','Desc')->offset(0)->limit(1000)->get()]);
         }else{
-            return $interventions->links()->orderBy('date','Desc')->get();
+            return $interventions->links()->orderBy('date','Desc')->offset(0)->limit(1000)->get();
         }
         
     }
 
-    public function get_by_machine_type_id( Request $request )
-    {
+    public function get_by_machine_type_id( Request $request ){
         return $this->get_interventins($request->id,
                                        $request->user,
                                        $request->id_mentenance,
@@ -116,6 +131,7 @@ class InterventionsController extends Controller
     }
 
     public function excell_generate($interventions){
+
          $xls = new PHPExcel();
         // Устанавливаем индекс активного листа
         try {
@@ -147,11 +163,12 @@ class InterventionsController extends Controller
         $sheet->setCellValue("A2", 'Maked by:'.Auth::user()->name.'    Date:'.date('Y-m-d') );
         $sheet->setCellValue("A3", 'Date');
         $sheet->setCellValue("B3", 'Type mentenance ');
-        $sheet->setCellValue("C3", 'Serial number machine');
-        $sheet->setCellValue("D3", 'Type machine');
-        $sheet->setCellValue("E3", 'Duration intervention');
-        $sheet->setCellValue("F3", 'Note');
-        $sheet->setCellValue("G3", 'User');
+        $sheet->setCellValue("C3", 'Intervention description');
+        $sheet->setCellValue("D3", 'Inventory number machine');
+        $sheet->setCellValue("E3", 'Type machine');
+        $sheet->setCellValue("F3", 'Duration intervention');
+        $sheet->setCellValue("G3", 'Note');
+        $sheet->setCellValue("H3", 'User');
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
@@ -159,6 +176,7 @@ class InterventionsController extends Controller
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getStyle('A1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
        
         $bg = array(
@@ -187,16 +205,19 @@ class InterventionsController extends Controller
         $count_interv = count($interventions);
        
         while($rows< $count_interv+4){
+              
+                
             $sheet->setCellValue('A'.$rows, $interventions[$cnt]->date);
             $sheet->setCellValue("B".$rows, $interventions[$cnt]->type_mentenance->name);
-            $sheet->setCellValue("C".$rows, $interventions[$cnt]->device->serial_number);
-            $sheet->setCellValue("D".$rows, $interventions[$cnt]->device_type->name);
-            $sheet->setCellValue("E".$rows, $interventions[$cnt]->duration);
-            $sheet->setCellValue("F".$rows, $interventions[$cnt]->note);
-            $sheet->setCellValue("G".$rows, $interventions[$cnt]->user->name);
+            $sheet->setCellValue("C".$rows, $interventions[$cnt]->intervention->name);
+            $sheet->setCellValue("D".$rows, $interventions[$cnt]->device->inventory_number);
+            $sheet->setCellValue("E".$rows, $interventions[$cnt]->device_type->name);
+            $sheet->setCellValue("F".$rows, $interventions[$cnt]->duration);
+            $sheet->setCellValue("G".$rows, $interventions[$cnt]->note);
+            $sheet->setCellValue("H".$rows, $interventions[$cnt]->user->name);
             $sheet->getRowDimension($rows)->setRowHeight(25);
 
-            $sheet->getStyle('A3:G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A3:H3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('C'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -204,12 +225,15 @@ class InterventionsController extends Controller
             $sheet->getStyle('E'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('F'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('G'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('H'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $rows++;
             $cnt++;
         }
+       
+        
 // Объединяем ячейки
-        $sheet->mergeCells('A1:G1');
-         $sheet->mergeCells('A2:G2');
+        $sheet->mergeCells('A1:H1');
+        $sheet->mergeCells('A2:H2');
         // Шрифт Times New Roman
         $sheet->getStyle('A1')->getFont()->setName('Arial');
         $sheet->getStyle('A2')->getFont()->setName('Arial');
@@ -232,6 +256,7 @@ class InterventionsController extends Controller
         $sheet->getStyle('E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('F2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('H2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
        
         $xls->getActiveSheet()->getStyle(
@@ -259,14 +284,14 @@ class InterventionsController extends Controller
     public function filter_excell_report( Request $request){
 
         $interventions = $this->get_interventins($request->id_type_machine,
-                                               $request->user,
-                                               $request->type_mentenance_filter,
-                                               $request->device_filter,
-                                               $request->date_timepicker_start,
-                                               $request->date_timepicker_end,
-                                               $request->intervention_filter,
-                                               '',
-                                               false);
+                                                 $request->user,
+                                                 $request->type_mentenance_filter,
+                                                 $request->device_filter,
+                                                 $request->date_timepicker_start,
+                                                 $request->date_timepicker_end,
+                                                 $request->intervention_filter,
+                                                 '',
+                                                 false);
         
         $this->excell_generate($interventions);
 
@@ -302,7 +327,9 @@ class InterventionsController extends Controller
         if($request->type_machine_report != ''){
             $interventions->machinetype($request->type_machine_report);
         }
-        $interventions_report = $interventions->links()->orderBy('date','Desc')->get();
+        $interventions_report = $interventions->orderBy('date','Desc')->get();
+       
+
             $this->excell_generate($interventions_report);
     }
 }

@@ -18,6 +18,7 @@ Route::group([
     $router->resource('type-mentenances', TypeMentenanceController::class);
     $router->resource('type-interventions', TypeInterventionController::class);
     $router->resource('interventions', InterventionController::class);
+    $router->resource('users', UserController::class);
 
 });
  

@@ -3,9 +3,40 @@ text-decoration:none;
 
 }
 
+.data_nok{
+    color: #9C0006;
+    font-weight: bolder;
+    background-color: #FFC7CE;
+  /*background-color: #ffe6e6;*/
+}
+.data_ok{
+    color: #006100;
+    font-weight: bolder;
+    background-color: #C6FFCE;
+}
+.data_warn{
+    color: #996600;
+    font-weight: bolder;
+    background-color: #FFEB9C;
+}
+.data_mis{
+    background-color:#f2f2f2;
+}
+.data_info{
+   background-color: #C1D3E6;
+   color: #0056e4;
+   font-weight: bolder;
+}
+
+
 #btn_type{
 	width:120px;
+    color: white;
 	
+}
+#btn_type:hover{
+color: black;
+
 }
 .inputfile {
 	
@@ -38,3 +69,12 @@ text-decoration:none;
 .inputfile + label {
 	
 }
+
+.hatching-green {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0) 49.9%, #6cb2eb 49.9%, #6cb2eb 60%, rgba(0, 0, 0, 0) 60%) 
+              fixed,
+              linear-gradient(45deg, #6cb2eb 10%, rgba(0, 0, 0, 0) 10%) 
+              fixed;
+  background-size: 0.8em 0.8em
+}
+

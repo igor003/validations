@@ -19,7 +19,7 @@ class ValidationsController extends Controller
     public function download($id){
         $validations = Validations::find($id);
 
-          $file = 'storage/admin/'.$validations->validation_path;
+        $file = 'storage/admin/'.$validations->validation_path;
 
 
         $headers = [
@@ -35,7 +35,6 @@ class ValidationsController extends Controller
     }
 
     public function update(Request $request){
-        //
     }
     
 }

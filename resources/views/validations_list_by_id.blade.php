@@ -12,21 +12,27 @@
           <a href="{{url()->previous()}}"><button class="btn btn-primary" type="submit">Back</button></a>
        </div>
         <div class="col-md-8 text-center">
-           <h2><b> MACNINE VALIDATION HISTORY</b></h2>
+           <h2><b> MACHINE VALIDATION HISTORY</b></h2>
         </div>
-  <div class="col-md-2 text-right">
-          <a href="/home"><button class="btn btn-primary" type="submit">Home</button></a>
+        <div class="col-md-2 text-right">
+          <a href="/home"><button class="btn btn-primary mr-4" type="submit">Home</button></a>
+            <a href="/type_inregistration/{{$device_info->device_type->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
        </div>
      
     </div>
+    <br>
       <div class="row row justify-content-center">
-          <div class="col-md-12 text-center">
+        <div class="col-md-6 text-right">
+           <img height='160px' src="{{asset('img/Arhiv2.png')}}" alt="">
+           </div>
+          <div class="col-md-6 text-left">
             <h5>Type: <b> {{$device_info->device_type->name}}</b></h5>
             <h5>Number: <b> {{$device_info->number}}</b></h5>
             <h5>Serial number:<b> {{$device_info->serial_number}}</b></h5>
             <h5>Inventory number: <b> {{$device_info->inventory_number}}</b></h5>
             <h5>Model: <b> {{$device_info->model}}</b></h5>
-            </div>
+          </div>
+           
    </div>
     
     <br>  

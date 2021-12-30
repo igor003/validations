@@ -96,7 +96,7 @@ class ValidationsController extends AdminController
         
         $form->select('id_device','Device inventory number')->options(Devices::all()->pluck('inventory_number','id'));
         $form->text('executor', __('Executor'));
-        $form->select('type')->options(['Initial' => 'Initial', 'Ordinary' => 'Ordinary','Extraordinary' => 'Extraordinary','Predictive'=>'Predictive']);
+        $form->select('type')->options(['Initial' => 'Initial', 'Ordinary' => 'Ordinary','Extraordinary' => 'Extraordinary','Predictive'=>'Predictive','Modification'=>'Modification']);
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->file('validation_path');
         $form->select('decision','Decision')->options(['Ok' => 'OK', 'KO' => 'KO',]);

@@ -28,7 +28,7 @@ class TypeInterventionsController extends Controller
     public function list_by_machine_mentenance_type(Request $request)
     {
 
-        $interventions_list = TypeInterventions::where('id_type','=',$request->id_mentenance)->where('id_device','=',$request->id_machine_type)->get();
+        $interventions_list = TypeInterventions::where('id_type','=',$request->id_mentenance)->where('id_device','=',$request->id_machine_type)->orderBy('name', 'asc')->get();
        
         return Response::json($interventions_list);
     }

@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container">
+    <div class="content">       
+            <div class="text-center">
+                <img height='300px' width='620px' class='sammy' src="/img/SAMMY_logo.png" alt="">
+                <br>
+
+            </div>    
+        </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +76,16 @@
             </div>
         </div>
     </div>
-</div>
+    <br>
+    <br>
+     <div class="text-center">
+                    <h2><b>EVIDENCE MACHINES AND EQUIPMENT</b></h2>
+                </div> 
+    <br>
+    <div class="flex-center position-ref full-height">
+        
+        <div class="content text-center">
+             <img height='355px' class='sammy' src="/img/validation.png" alt="">
+        </div>
+    </div>
 @endsection

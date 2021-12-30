@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class StoreInterventionRequest extends FormRequest
 {
     /**
@@ -29,6 +30,8 @@ class StoreInterventionRequest extends FormRequest
             'device' => 'required',
             'intervention' =>'required',
             'duration' =>'required',
+            'nmb_of_shuts' =>'sometimes|required', 
+            'temper' =>'sometimes|required',
             
         ];
     }
