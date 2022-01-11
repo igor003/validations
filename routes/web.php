@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/devices_list_by_type','DevicesController@get_by_id_type')->name('dev_by_type');
     Route::post('/interventions_list','TypeInterventionsController@list_by_machine_mentenance_type');
     Route::post('/inreg_interventions','InterventionsController@store')->name('create_interv');
-    Route::get('/interventions_list/{id}','InterventionsController@show')->name('interv_list');
+    Route::get('/interventions_list/{id}/{id_machine?}','InterventionsController@show')->name('interv_list');
     Route::post('/get_interventions', 'InterventionsController@get_by_machine_type_id')->name('get_interv');
     Route::post('/download_interv_report','InterventionsController@download_report')->name('rep_download');
     Route::get('download__machine_instruction/{id}','DeviceTypesController@download_instruction')->name('download_machine_instruction');

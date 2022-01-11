@@ -32,6 +32,8 @@
                     <tr> 
                         @if($device_type['id'] == '3')
                             <th colspan="8" class='align-middle text-center bg-info'>General information</th>
+                        @elseif($device_type['id'] == '4')
+                            <th colspan="8" class='align-middle text-center bg-info'>General information</th>
                         @else
                             <th colspan="7" class='align-middle text-center bg-info'>General information</th>
                         @endif
@@ -50,8 +52,12 @@
                         <th class='text-center align-middle bg-info' scope="col">Inventory number</th>
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
                         <th class='text-center align-middle bg-info' scope="col">Maker</th>
+                        @if($device_type['id'] == '4')
+                            <th class='text-center align-middle bg-info' scope="col">Project</th>
+                        @endif
                         <th class='text-center align-middle bg-info' scope="col">Model</th>
                         <th class='text-center align-middle bg-info' scope="col">Status</th>
+                      
                         <th class='text-center align-middle bg-info' scope="col">Date of registration</th>
                         @if($device_type['id'] == '3')
                             <th class='text-center align-middle bg-info' scope="col">Info</th>
@@ -81,6 +87,9 @@
                             <td class='text-center'>{{$device['inventory_number']}}</td>
                             <td class='text-center'>{{$device['serial_number']}}</td>
                             <td class='text-center'>{{Str::upper($device['maker'])}}</td>
+                            @if($device_type['id'] == '4')   
+                                <td class='text-center'>{{$device['project']}}</td>
+                            @endif
                             <td class='text-center'>{{$device['model']}}</td>
                             <td class='text-center'>{{$device['status']}}</td>
                             <td class='text-center'>{{$device['start_date']}}</td> 

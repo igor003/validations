@@ -64,6 +64,9 @@ class InterventionController extends AdminController
         });
         $grid->column('id_type', __('Id type'));
         $grid->column('duration', __('Duration'));
+        $grid->column('temper', __('Temperature'));
+        $grid->column('nmb_of_pices', __('Number of pices'));
+        $grid->column('nmb_of_shuts', __('Number of shuts'));
         $grid->column('report_path', __('Report path'));
         $grid->column('note', __('Note'));
         $grid->column('created_at', __('Created at'));
@@ -92,6 +95,9 @@ class InterventionController extends AdminController
 
         $show->field('id_type', __('Id type'));
         $show->field('duration', __('Duration'));
+        $show->field('temper', __('Temperature'));
+        $show->field('nmb_of_pices', __('Number of pices'));
+        $show->field('nmb_of_shuts', __('Number of shuts'));
         $show->field('report_path', __('Report path'));
         $show->field('note', __('Note'));
         $show->field('created_at', __('Created at'));

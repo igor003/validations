@@ -102,9 +102,15 @@
             <div class="form-group">
               <label for="devices">Select inventory number</label>
               <select  name='device_filter' class="form-control" id="devices_filter">
-                  <option value ='' selected></option>
+                 <option value ='' selected></option>
                   @foreach($devices as $device)
-                    <option value="{{$device->id}}">{{$device->inventory_number}}</option>
+                  @if($machine)
+                    @if($device->id == $machine->id)
+                      <option selected value="{{$device->id}}">{{$device->inventory_number}}</option>
+                    @endif
+                  @endif
+                  
+                      <option value="{{$device->id}}">{{$device->inventory_number}}</option>
                   @endforeach
               </select>
             </div>

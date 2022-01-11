@@ -39,7 +39,9 @@ class DevicesController extends AdminController
         $grid->column('serial_number', __('Serial number'));
         $grid->column('inventory_number', __('Inventory number'));
         $grid->column('maker', __('Maker'));
+        $grid->column('project', __('Project'));
         $grid->column('model', __('Model'));
+        $grid->column('push_back', __('Push back'));
         $grid->column('status', __('Status'));
         $grid->column('note', __('Note'));
         $grid->column('start_date', __('Start date'));
@@ -84,14 +86,16 @@ class DevicesController extends AdminController
     protected function detail($id)
     {
         $show = new Show(Devices::findOrFail($id));
-
+      
         $show->field('id', __('Id'));
         $show->field('id_type', __('Id type'));
         $show->field('number', __('Number'));
         $show->field('serial_number', __('Serial number'));
         $show->field('inventory_number', __('Inventory number'));
         $show->field('maker', __('Maker'));
+        $show->field('project', __('Project'));
         $show->field('model', __('Model'));
+        $show->field('push_back', __('Push back'));
         $show->field('status', __('Status'));
         $show->field('note', __('Note'));
         $show->field('info_img', __('Info'));
@@ -112,15 +116,15 @@ class DevicesController extends AdminController
     protected function form()
     {
      
-
         $form = new Form(new Devices());
         $form->select('id_type')->options(DeviceTypes::all()->pluck('name', 'id'));
         $form->text('number', __('Number'));
         $form->text('serial_number', __('Serial number'));
         $form->text('inventory_number', __('Inventory number'));
         $form->text('maker', __('Maker'));
+        $form->text('project', __('Project'));
         $form->text('model', __('Model'));
-        // $form->text('status', __('Status'));
+        $form->radio('push_back',__('Push back'))->options(['1' => 'Yes', '0'=> 'No'])->default('0');
         $form->image('info_img')->move('info_img');
         $form->select('status','Status')->options(['Production' => 'Production', 'Reserve' => 'Reserve','Send' => 'Send',]);
         $form->text('note', __('Note'));

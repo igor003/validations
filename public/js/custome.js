@@ -33,7 +33,7 @@ $( function() {
         
     });
     
-   
+  
 
     $('#datepicker').datetimepicker({
                     format:'Y-m-d H:i:s',
@@ -41,6 +41,7 @@ $( function() {
                     validateOnBlur:true,
                     lang:'ru',
                     maxDate:'0'    //tomorrow is maximum date calendar
+
     });
 
     $('#timepicker').datetimepicker({
@@ -50,27 +51,38 @@ $( function() {
         defaultTime:'00:00'
     });
 
-    $('#type_machine,#type_mentenance').on('change',function(e){    
+    $('#type_machine').on('change',function(e){    
         e.preventDefault();
         var type_id = $('#type_machine').val();
 
         var type_mentenance = $('#type_mentenance').val();
         var all_mini = $('#show_all').val();
-        if(type_id == '' && type_mentenance == ''){
-            $("intervention").attr('disabled','disabled');
-            $("devices").attr('disabled','disabled');
+        console.log( type_id);
+        if(type_id == ''){
+            $('#devices').attr('disabled','disabled');
+        }else{
+            $('#devices').removeAttr('disabled');
         }
+        // if(type_id == '' && type_mentenance == ''){
+        //     $("intervention").attr('disabled','disabled');
+        //     $("devices").attr('disabled','disabled');
+        // }
+        
         if(type_id == 9){
-            $('.temperature').append('<input value="" name="temper" id="temperature" type="text" class="form-control ">')
+            $('.temperature').empty();
+            $('.temperature').append('<label for="temper">Temperature °C</label><input value="" name="temper" id="temperature" type="text" class="form-control ">')
             $('.temperature').show();
         }else{
             $('.temperature').hide();
+           
         }
         if(type_id == 3){
-            $('.shuts').append('<input value="" name="nmb_of_shuts" id="shuts" type="text" class="form-control ">')
+            $('.shuts').empty();
+            $('.shuts').append('<label for="temper">Nmb of shuts</label><input value="" name="nmb_of_shuts" id="shuts" type="text" class="form-control ">')
             $('.shuts').show();
         }else{
             $('.shuts').hide();
+           
         }
         $.ajax({
         url:'/devices_list_by_type',
@@ -250,6 +262,7 @@ $( function() {
 });  
 
 function generate_hnml_interventions(data){
+    console.log(data);
     var result = '<tr>' +
         '<td class="text-center">'+data.date.substring(0, 10)+'</td>'+
         '<td class="text-center">'+data.device.inventory_number+'</td>'+
@@ -265,8 +278,8 @@ function generate_hnml_interventions(data){
             result +='<td class="text-center">'+data.temper+'</td>';
         }
         if(data['device_type']['id'] == 3){
-            if(data.number_of_shuts != null){
-                result +='<td class="text-center">'+data.number_of_shuts+'</td>';
+            if(data.nmb_of_shuts != 0){
+                result +='<td class="text-center">'+data.nmb_of_shuts+'</td>';
             }else{
                 result +='<td class="text-center">---</td>';
             }

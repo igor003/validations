@@ -18,6 +18,7 @@ use PHPExcel_Style_Alignment;
 use PHPExcel_Style_Border;
 use PHPExcel_Style_Fill;
 use PHPExcel_Worksheet_Drawing;
+use DateTime;
 class InterventionsController extends Controller
 {
     public function index()
@@ -130,7 +131,7 @@ class InterventionsController extends Controller
         
     }
 
-    public function excell_generate($interventions){
+    public function excell_generate($interventions,$date_start,$date_end){
 
          $xls = new PHPExcel();
         // Устанавливаем индекс активного листа
@@ -154,21 +155,21 @@ class InterventionsController extends Controller
         $objDrawing->setOffsetY(6);                
         //set width, height
         //$objDrawing->setWidth(163); 
-        $objDrawing->setWidth(50); 
+        $objDrawing->setWidth(90); 
         $objDrawing->setHeight(45); 
         $objDrawing->setWorksheet($sheet);
 
 
-        $sheet->setCellValue("A1", 'List of interventions ' );
-        $sheet->setCellValue("A2", 'Maked by:'.Auth::user()->name.'    Date:'.date('Y-m-d') );
-        $sheet->setCellValue("A3", 'Date');
-        $sheet->setCellValue("B3", 'Type mentenance ');
-        $sheet->setCellValue("C3", 'Intervention description');
-        $sheet->setCellValue("D3", 'Inventory number machine');
-        $sheet->setCellValue("E3", 'Type machine');
-        $sheet->setCellValue("F3", 'Duration intervention');
-        $sheet->setCellValue("G3", 'Note');
-        $sheet->setCellValue("H3", 'User');
+        $sheet->setCellValue("A1", 'LIST OF INTERVENTIONS ' );
+        $sheet->setCellValue("A2", 'Maked by:'.Auth::user()->name.'    Date:'.date('Y-m-d').'        Report period:'.$date_start.' : '.$date_end );
+        $sheet->setCellValue("A4", 'Date');
+        $sheet->setCellValue("B4", 'Type mentenance ');
+        $sheet->setCellValue("C4", 'Intervention description');
+        $sheet->setCellValue("D4", 'Inventory number machine');
+        $sheet->setCellValue("E4", 'Type machine');
+        $sheet->setCellValue("F4", 'Duration intervention (min)');
+        $sheet->setCellValue("G4", 'Note');
+        $sheet->setCellValue("H4", 'User');
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
@@ -178,46 +179,70 @@ class InterventionsController extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getStyle('A1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $sheet->getStyle('A1')->getFont()->setBold( true );
        
         $bg = array(
             'fill' => array(
                 'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                'color' => array('rgb' => '01B050')
+                'color' => array('rgb' => '39B5FA'),
             )
         );
-        $sheet->getStyle("A3:G3")->applyFromArray($bg);
         $bg2 = array(
             'fill' => array(
                 'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                'color' => array('rgb' => '0080ff')
+                'font' => [
+                        'size' => 26
+                        ]
             ),
             'borders'=>array(
                 'style' => PHPExcel_Style_Border::BORDER_THICK,
                 'color' => array('rgb' => '000000')
             ),
         );
+       
+        $sheet->getStyle("A4:H4")->getFont()->setSize(12);
+        $sheet->getStyle("A4:H4")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $sheet->getStyle("A4:H4")->getFont()->setBold( true );
+        $sheet->getStyle("A4:H4")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $sheet->getStyle("A4:H4")->applyFromArray($bg);
+        $sheet->getStyle("A4:H4")->getAlignment()->setWrapText(true);
+        $sheet->getColumnDimension('A')->setAutoSize(false);
+        $sheet->getColumnDimension('A')->setWidth('12');
+        $sheet->getColumnDimension('B')->setAutoSize(false);
+        $sheet->getColumnDimension('B')->setWidth('18');
+        $sheet->getColumnDimension('C')->setAutoSize(false);
+        $sheet->getColumnDimension('C')->setWidth('15');
+        $sheet->getColumnDimension('D')->setAutoSize(false);
+        $sheet->getColumnDimension('D')->setWidth('15');
+        $sheet->getColumnDimension('E')->setAutoSize(false);
+        $sheet->getColumnDimension('E')->setWidth('18');
+        $sheet->getColumnDimension('F')->setAutoSize(false);
+        $sheet->getColumnDimension('F')->setWidth('13');
+        
+        
         $sheet->getStyle("A1")->applyFromArray($bg2);
         $sheet->getRowDimension(1)->setRowHeight(42);
         $sheet->getRowDimension(2)->setRowHeight(15);
-        $sheet->getRowDimension(3)->setRowHeight(20);
-        $rows = 4;
+        $sheet->getRowDimension(4)->setRowHeight(48);
+        $rows = 5;
         $cnt = 0;
         $count_interv = count($interventions);
        
         while($rows< $count_interv+4){
-              
-                
-            $sheet->setCellValue('A'.$rows, $interventions[$cnt]->date);
+              $cur_date = new DateTime($interventions[$cnt]->date); 
+              $cur_hour = new DateTime($interventions[$cnt]->duration);
+                 $sheet->setCellValue('A'.$rows,$cur_date->format('Y-m-d') );
+            // $sheet->setCellValue('A'.$rows, substr($interventions[$cnt]->date, 0, 10));
             $sheet->setCellValue("B".$rows, $interventions[$cnt]->type_mentenance->name);
             $sheet->setCellValue("C".$rows, $interventions[$cnt]->intervention->name);
             $sheet->setCellValue("D".$rows, $interventions[$cnt]->device->inventory_number);
             $sheet->setCellValue("E".$rows, $interventions[$cnt]->device_type->name);
-            $sheet->setCellValue("F".$rows, $interventions[$cnt]->duration);
+            $sheet->setCellValue("F".$rows, (int)$cur_hour->format('i'));
             $sheet->setCellValue("G".$rows, $interventions[$cnt]->note);
             $sheet->setCellValue("H".$rows, $interventions[$cnt]->user->name);
             $sheet->getRowDimension($rows)->setRowHeight(25);
 
-            $sheet->getStyle('A3:H3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A4:H4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('C'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -226,11 +251,31 @@ class InterventionsController extends Controller
             $sheet->getStyle('F'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('G'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('H'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
             $rows++;
             $cnt++;
         }
-       
-        
+            $sheet->getStyle('E'.$rows)->getFont()->setBold( true );
+            $sheet->getStyle('E'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+           
+            $sheet->getStyle('F'.$rows)->getFont()->setBold( true );
+            $sheet->getStyle('F'.$rows)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            $sheet->getStyle('F'.($rows + (int)1))->getFont()->setBold( true );
+            $sheet->getStyle('F'.($rows + (int)1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            $sheet->getStyle('E'.($rows + (int)1))->getFont()->setBold( true );
+            $sheet->getStyle('E'.($rows + (int)1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+
+
+
+            $sheet->setCellValue('E'.$rows, "Total:");
+            $sheet->setCellValue('E'.($rows + (int)1), "Count:");
+          
+            $sheet->setCellValue('F'.$rows, "=SUM(F5:E".($rows - (int)1).")");
+            $sheet->setCellValue('F'.($rows + (int)1), ($rows-(int)5));
+          ;
 // Объединяем ячейки
         $sheet->mergeCells('A1:H1');
         $sheet->mergeCells('A2:H2');
@@ -293,7 +338,7 @@ class InterventionsController extends Controller
                                                  '',
                                                  false);
         
-        $this->excell_generate($interventions);
+        $this->excell_generate($interventions,$request->date_timepicker_start,$request->date_timepicker_end);
 
     }
 
@@ -303,8 +348,16 @@ class InterventionsController extends Controller
         
         $type_machine = DeviceTypes::find($id);
         $diveces = Devices::where('id_type','=',$id)->get();
+        $route = \Route::current();
+
+        if($route->parameter('id_machine')){
+           $machine = Devices::find($route->parameter('id_machine')); 
+        }else{
+            $machine = false;
+        }
+        
         $users = User::all();
-        return view('interventions_list',['users'=>$users,'types_mentenance'=>$type_mentenance,'devices'=>$diveces,'id'=>$id,'type_machine'=>$type_machine]);
+        return view('interventions_list',['machine'=>$machine,'users'=>$users,'types_mentenance'=>$type_mentenance,'devices'=>$diveces,'id'=>$id,'type_machine'=>$type_machine]);
     }
     public function download_report (Request $request){
 
@@ -330,6 +383,6 @@ class InterventionsController extends Controller
         $interventions_report = $interventions->orderBy('date','Desc')->get();
        
 
-            $this->excell_generate($interventions_report);
+            $this->excell_generate($interventions_report,$request->date_interv_report_start,$request->date_interv_report_end);
     }
 }

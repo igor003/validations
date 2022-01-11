@@ -181,6 +181,7 @@ class DevicesController extends Controller
             $devices[$cnt]['start_date'] = $cur_device['start_date'];
             $devices[$cnt]['status'] = $cur_device['status'];
             $devices[$cnt]['note'] = $cur_device['note'];
+            $devices[$cnt]['project'] = $cur_device['project'];
             // $devices[$cnt]['note'] = $res; 
             
          

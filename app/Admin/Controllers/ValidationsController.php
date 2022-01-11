@@ -38,7 +38,7 @@ class ValidationsController extends AdminController
         $grid->column('start_date', __('Start date'));
         $grid->column('validation_path', __('Validation path'));
         $grid->column('decision', __('Decision'));
-      
+        $grid->column('nmb_shuts', __('Number of shuts'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
         $grid->filter(function($filter){
@@ -77,7 +77,7 @@ class ValidationsController extends AdminController
         $show->field('start_date', __('Start date'));
         $show->field('validation_path', __('Validation path'));
         $show->field('decision', __('Decision'));
-       
+        $show->field('nmb_shuts', __('Number of shuts'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -100,7 +100,7 @@ class ValidationsController extends AdminController
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->file('validation_path');
         $form->select('decision','Decision')->options(['Ok' => 'OK', 'KO' => 'KO',]);
-      
+        $form->number('nmb_shuts', __('Number of shuts'));
        
 
         return $form;

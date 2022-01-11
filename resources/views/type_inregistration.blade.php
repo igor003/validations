@@ -52,7 +52,7 @@
   </div>
   <br>
    <div>
-     <a href="/interventions_list/{{$id}}">
+     <a href="/interventions_list/{{$id}}/{{$device->id}}">
       <button type="button" class="btn btn-primary btn-lg btn-block"> <h3>Maintenance</h3></button>
     </a> 
    </div>
