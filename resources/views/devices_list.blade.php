@@ -13,10 +13,7 @@
         <div class="col-md-8 text-center">
            <h2><b>MACHINES LIST: {{$device_type->name}} </b></h2>
        </div>
-      <div class="col-md-2 text-right">
-          <a href="/home"><button class="btn btn-primary mr-4" type="submit">Home</button></a>
-          <a href="/type_inregistration/{{$device_type->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
-       </div>
+     
     
 
  

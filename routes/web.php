@@ -43,4 +43,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/generate_interv_excell_report','InterventionsController@generate_report')->name('generate_report_excell');
     Route::post('/gener_excell_rep_filter','InterventionsController@filter_excell_report')->name('filter_excell_report');
     Route::post('/machine_count','DevicesController@get_machine_pices')->name('machine_pices');
+    Route::post('/get_shuts','InterventionsController@get_shuts')->name('get_shuts');
 });

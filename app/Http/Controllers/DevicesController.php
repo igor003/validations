@@ -290,10 +290,7 @@ class DevicesController extends Controller
         return Response::json($machines_by_type);
     }
 
-    public function edit(Devices $devices)
-    {
-        //
-    }
+    
 
     public function update(Request $request, Devices $devices)
     {

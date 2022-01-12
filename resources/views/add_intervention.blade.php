@@ -84,10 +84,10 @@
 
 				<div style="display:none" class="form-group count_pce"></div>
  				<div style="display:none" class="form-group temperature">
-					<label for="temper">Temperature °C</label>
+					
 				</div>
 				<div style="display:none" class="form-group shuts">
-					<label for="temper">Nmb of shuts</label>
+					
 				</div>
 
 				<div class="form-group">

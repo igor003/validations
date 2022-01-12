@@ -14,7 +14,7 @@
        </div>
       <div class="col-md-2 text-right">
           <a href="/home"><button class="btn btn-primary mr-4" type="submit">Home</button></a>
-         <a href="/type_inregistration/{{$type_machine->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
+         <a href="/devices/{{$type_machine->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
         
          
        </div>
@@ -40,7 +40,7 @@
                       <th class='text-center' scope="col">Duration</th>
                       <th class='text-center' scope="col">Note</th>
                       @if($type_machine->id == 9)
-                        <th class='text-center' scope="col">Temperature</th>
+                        <th class='text-center' scope="col">Temperature °C</th>
                       @endif
                       @if($type_machine->id == 3)
                         <th class='text-center' scope="col">Number of shuts</th>

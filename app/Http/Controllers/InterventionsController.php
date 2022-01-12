@@ -231,13 +231,22 @@ class InterventionsController extends Controller
         while($rows< $count_interv+4){
               $cur_date = new DateTime($interventions[$cnt]->date); 
               $cur_hour = new DateTime($interventions[$cnt]->duration);
+              $hours = $cur_hour->format('H');
+              $minutes;
+              if($hours !== '00'){
+                $minutes = ($hours*60)+(int)$cur_hour->format('i');
+              }else{
+                $minutes = (int)$cur_hour->format('i');
+              }
+
                  $sheet->setCellValue('A'.$rows,$cur_date->format('Y-m-d') );
+              
             // $sheet->setCellValue('A'.$rows, substr($interventions[$cnt]->date, 0, 10));
             $sheet->setCellValue("B".$rows, $interventions[$cnt]->type_mentenance->name);
             $sheet->setCellValue("C".$rows, $interventions[$cnt]->intervention->name);
             $sheet->setCellValue("D".$rows, $interventions[$cnt]->device->inventory_number);
             $sheet->setCellValue("E".$rows, $interventions[$cnt]->device_type->name);
-            $sheet->setCellValue("F".$rows, (int)$cur_hour->format('i'));
+            $sheet->setCellValue("F".$rows, $minutes);
             $sheet->setCellValue("G".$rows, $interventions[$cnt]->note);
             $sheet->setCellValue("H".$rows, $interventions[$cnt]->user->name);
             $sheet->getRowDimension($rows)->setRowHeight(25);
@@ -384,5 +393,30 @@ class InterventionsController extends Controller
        
 
             $this->excell_generate($interventions_report,$request->date_interv_report_start,$request->date_interv_report_end);
+    }
+
+    public static function convert_from_latin1_to_utf8_recursively($dat)
+    {
+      if (is_string($dat)) {
+         return utf8_encode($dat);
+      } elseif (is_array($dat)) {
+         $ret = [];
+         foreach ($dat as $i => $d) $ret[ $i ] = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $ret;
+      } elseif (is_object($dat)) {
+         foreach ($dat as $i => $d) $dat->$i = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $dat;
+      } else {
+         return $dat;
+      }
+   }
+    public function get_shuts(Request $request)
+    {
+        $info_interv = Interventions::where('id_machine','=',$request->machine)->orderBy('date','Desc')->first();
+        $res = $this->convert_from_latin1_to_utf8_recursively($info_interv);
+
+        return Response::json($res);
     }
 }

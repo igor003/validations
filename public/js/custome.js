@@ -80,6 +80,8 @@ $( function() {
             $('.shuts').empty();
             $('.shuts').append('<label for="temper">Nmb of shuts</label><input value="" name="nmb_of_shuts" id="shuts" type="text" class="form-control ">')
             $('.shuts').show();
+            get_shuts_on_input();
+                
         }else{
             $('.shuts').hide();
            
@@ -354,4 +356,44 @@ function get_interventions_list(){
 
 $( document ).ready(function() {
     get_interventions_list();
-});   
+
+
+}); 
+
+
+function get_shuts_on_input(){
+    $('#shuts').on('change',function(){
+        var cnt = $('#shuts').val();
+        var machine = $('#devices').val();
+
+        $.ajax({
+            url: '/get_shuts',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                cnt:cnt,
+                machine:machine,
+            },
+            success: function(data){
+
+                if(cnt<data.nmb_of_shuts){
+                    $('#shuts').css( "color", "red" );
+                    $('#shuts').val('Enter the higher number');
+                    
+                }else{
+                     $('#shuts').css( "color", "black" );
+                }
+               
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+};
