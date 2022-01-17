@@ -239,7 +239,7 @@ $( function() {
     });
 
     if($('#card:visible')){
-        $('#card').delay(1800).slideUp();
+        $('#card').delay(3800).slideUp();
     }
 
     $('#date_timepicker_start').datetimepicker({

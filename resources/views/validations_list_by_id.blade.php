@@ -16,9 +16,9 @@
         </div>
         <div class="col-md-2 text-right">
           <a href="/home"><button class="btn btn-primary mr-4" type="submit">Home</button></a>
-            <a href="/devices/{{$device_info->device_type->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
+            <a href="/type_inregistration/{{$device_info->device_type->id}}"><button class="btn btn-primary" type="submit">Main</button></a>
        </div>
-
+        
      
     </div>
     <br>

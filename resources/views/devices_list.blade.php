@@ -28,7 +28,7 @@
                 <thead>
                     <tr> 
                         @if($device_type['id'] == '3')
-                            <th colspan="8" class='align-middle text-center bg-info'>General information</th>
+                            <th colspan="9" class='align-middle text-center bg-info'>General information</th>
                         @elseif($device_type['id'] == '4')
                             <th colspan="8" class='align-middle text-center bg-info'>General information</th>
                         @else
@@ -48,6 +48,9 @@
                         <th class='text-center align-middle bg-info' scope="col">Number</th>
                         <th class='text-center align-middle bg-info' scope="col">Inventory number</th>
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
+                        @if($device_type['id'] == '3')
+                            <th class='text-center align-middle bg-info' scope="col">Total number of shuts</th>
+                        @endif
                         <th class='text-center align-middle bg-info' scope="col">Maker</th>
                         @if($device_type['id'] == '4')
                             <th class='text-center align-middle bg-info' scope="col">Project</th>
@@ -83,6 +86,11 @@
                             <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
                             <td class='text-center'>{{$device['inventory_number']}}</td>
                             <td class='text-center'>{{$device['serial_number']}}</td>
+                            @if($device_type['id'] == '3')
+                                <td class='text-center'>{{$device['mini_cnt']}}</td>
+                            @endif
+
+
                             <td class='text-center'>{{Str::upper($device['maker'])}}</td>
                             @if($device_type['id'] == '4')   
                                 <td class='text-center'>{{$device['project']}}</td>
@@ -184,7 +192,9 @@
 
                                     @if($field === 'number_of_shuts')
                                         @if($device_type['id'] == '4')
-                                            @if($device['pce_cnt'] < 9000)
+                                            @if($device['pce_cnt'] === 'n/a')
+                                                <td class='text-center '>{{$device['pce_cnt']}}</td>
+                                            @elseif($device['pce_cnt'] < 9000)
                                                 <td class='text-center data_ok'>{{$device['pce_cnt']}}</td>
                                             @elseif($device['pce_cnt'] > 9000 && $device['pce_cnt']<10000)
                                                 <td class='text-center data_warn'>{{$device['pce_cnt']}}</td>

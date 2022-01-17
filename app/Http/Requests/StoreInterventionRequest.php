@@ -26,6 +26,7 @@ class StoreInterventionRequest extends FormRequest
     {
         return [
             'date' => 'required',
+            'date' => 'before:tomorrow',
             'type_mentenance' =>'required',
             'device' => 'required',
             'intervention' =>'required',

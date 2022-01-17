@@ -112,6 +112,19 @@ class DevicesController extends Controller
         return Response::json($res); 
     }
 
+    public function get_count_of_pices_pce($device_id,$device_number){
+        $intervent = Interventions::where('id_machine','=',$device_id)->where('id_type','=','155')->orderBy('date', 'DESC')->first();
+        if($intervent['nmb_of_pices'] !== NULL ){
+            $interv_cnt = $intervent['nmb_of_pices'];
+        }else{
+             $interv_cnt = 0;
+        }
+        $cur_count = CollaudoLocale::where('NomeBanco','=',$device_number)->count();
+        $difference = (int)$cur_count - (int)$interv_cnt;
+        return $difference;
+       
+    }
+
     public function show($id){
         //тип машины
         $device_type = DeviceTypes::find($id)->toArray();
@@ -151,7 +164,7 @@ class DevicesController extends Controller
                 //если есть последняя запись ментенанцы
                 if( $interventions){
                     $type_date[$field] = substr($interventions->date,0,10);
-                    //если нет последнеё записи ментенанцы
+                    //если нет последней записи ментенанцы
                 }else{
                     $type_date[$field] = false;
                 }
@@ -162,10 +175,9 @@ class DevicesController extends Controller
              $res = '--';
             if($cur_device['id_type'] == '4' && $cur_device['model'] == 'LE Solution'){
                 if(CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->first()){
-                    set_time_limit(0);
+                  
                     $res = CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->count();
 
-                     
                 }else{
                     $res = '--';
                 }
@@ -183,44 +195,47 @@ class DevicesController extends Controller
             $devices[$cnt]['note'] = $cur_device['note'];
             $devices[$cnt]['project'] = $cur_device['project'];
             // $devices[$cnt]['note'] = $res; 
-            
-         
             $devices[$cnt]['info_img'] = $cur_device['info_img'];
             
             foreach($type_date as $key=>$value){
-        
-                if($key == 'weekly'){
+                if($devices[$cnt]['status'] !== 'Production'){
                     $devices[$cnt][$key] = $value;
-                    $devices[$cnt]['lights_w'] = $this->processing__maintenance_date($value,$key);
-                }elseif($key == 'monthly'){
-                    $devices[$cnt][$key] = $value;
-                    $devices[$cnt]['lights_m'] = $this->processing__maintenance_date($value,$key);
-                }elseif($key == 'yearly'){
-                    $devices[$cnt][$key] = $value;
-                    $devices[$cnt]['lights_y'] = $this->processing__maintenance_date($value,$key);
-                }elseif($key == 'number_of_shuts'){ 
-                    $devices[$cnt][$key] = $value; 
-                    if($cur_device['id_type'] == '4'){
-                        $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
-                        if($intervent['nmb_of_pices'] !== NULL ){
-                            $interv_cnt = $intervent['nmb_of_pices'];
-                        }else{
-                             $interv_cnt = 0;
+                    $devices[$cnt]['lights_w'] = 'secondary';
+                    $devices[$cnt]['lights_m'] = 'secondary';
+                    $devices[$cnt]['lights_y'] = 'secondary';
+                    $devices[$cnt]['mini_cnt'] = 0;
+                    if($key == 'number_of_shuts' && $cur_device['id_type'] == '4'){
+                        $devices[$cnt]['pce_cnt'] = $this->get_count_of_pices_pce($cur_device["id"],$cur_device['number']);
+                    }
+                }else{
+                    if($key == 'weekly'){
+                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt]['lights_w'] = $this->processing__maintenance_date($value,$key);
+                    }elseif($key == 'monthly'){
+                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt]['lights_m'] = $this->processing__maintenance_date($value,$key);
+                    }elseif($key == 'yearly'){
+                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt]['lights_y'] = $this->processing__maintenance_date($value,$key);
+                    }elseif($key == 'number_of_shuts'){ 
+                        $devices[$cnt][$key] = $value; 
+                        if($cur_device['id_type'] == '4'){
+                           if($cur_device['push_back'] == '1'){
+                                $devices[$cnt]['pce_cnt'] = $this->get_count_of_pices_pce($cur_device["id"],$cur_device['number']);
+                            }else{
+                                $devices[$cnt]['pce_cnt'] = 'n/a';
+                            }
                         }
-                        $cur_count = CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->count();
-                        $difference = (int)$cur_count - (int)$interv_cnt;
-                        $devices[$cnt]['pce_cnt'] = $difference;
+                        if($cur_device['id_type'] == '3'){
+                            $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
+                            $devices[$cnt]['mini_cnt'] = $intervent['nmb_of_shuts'];
+                        }
                     }
-                    if($cur_device['id_type'] == '3'){
-                        $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
-                        $devices[$cnt]['mini_cnt'] = $intervent['nmb_of_shuts'];
+                    else{
+                        $devices[$cnt][$key] = $value;
                     }
-                }
-                else{
-                    $devices[$cnt][$key] = $value;
                 }
             }
-                
             if($max_date == NULL){
                 $devices[$cnt]['prev_date'] = '---';
                 $devices[$cnt]['next_date'] = '---';

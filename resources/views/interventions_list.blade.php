@@ -92,9 +92,9 @@
               <select name='type_mentenance_filter' class="form-control" id="type_mentenance_filter">
                   <option value ='{{old("type_mentenance")}}' selected></option>
                 @foreach($types_mentenance as $type_mentenance)
-                @if($type_mentenance->id == old("type_mentenance") )
-                    <option selected value="{{$type_mentenance->id}}">{{$type_mentenance->name}}</option>
-                @endif
+                    @if($type_mentenance->id == old("type_mentenance") )
+                        <option selected value="{{$type_mentenance->id}}">{{$type_mentenance->name}}</option>
+                    @endif
                     <option value="{{$type_mentenance->id}}">{{$type_mentenance->name}}</option>
                 @endforeach
               </select>
@@ -104,12 +104,11 @@
               <select  name='device_filter' class="form-control" id="devices_filter">
                  <option value ='' selected></option>
                   @foreach($devices as $device)
-                  @if($machine)
-                    @if($device->id == $machine->id)
-                      <option selected value="{{$device->id}}">{{$device->inventory_number}}</option>
-                    @endif
-                  @endif
-                  
+                      @if($machine)
+                        @if($device->id == $machine->id)
+                          <option selected value="{{$device->id}}">{{$device->inventory_number}}</option>
+                        @endif
+                      @endif
                       <option value="{{$device->id}}">{{$device->inventory_number}}</option>
                   @endforeach
               </select>

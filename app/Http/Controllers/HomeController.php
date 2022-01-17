@@ -24,8 +24,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        exit($request);
-       exit date("j, n, Y");  
+     
+
         return view('home');
     }
 }
