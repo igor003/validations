@@ -228,7 +228,17 @@ class DevicesController extends Controller
                         }
                         if($cur_device['id_type'] == '3'){
                             $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
+                            $valid = Validations::where('id_device','=',$cur_device["id"])->orderBy('start_date', 'DESC')->first();
+                           
+                            if($valid->nmb_shuts !== null){
+                                $differ = $valid->nmb_shuts - $intervent['nmb_of_shuts']; 
+                            }else{
+                                $differ = $intervent['nmb_of_shuts'];
+                            }
+                            
+                         
                             $devices[$cnt]['mini_cnt'] = $intervent['nmb_of_shuts'];
+                            $devices[$cnt]['mini_differ'] = $differ;
                         }
                     }
                     else{
@@ -264,7 +274,7 @@ class DevicesController extends Controller
         $date->add(new DateInterval('P7D'));
 
        
-       
+     
         return view('devices_list',['menten_date'=>$date->format('Y-m-d'),'fields'=>$fields,'devices'=>$devices,'device_type'=>$device_type]);
     }
     public function type_inregistration_view($id_disp,$id_type){

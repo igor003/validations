@@ -271,14 +271,8 @@ function generate_hnml_interventions(data){
         '<td class="text-center">'+data.type_mentenance.name+'</td>'+
         '<td class="text-center">'+data.intervention.name+'</td>'+
         '<td class="text-center">'+data.duration+'</td>';
-        if(data.note != null){
-                result +='<td class="text-center">'+data.note+'</td>';
-        }else{
-            result +='<td class="text-center">---</td>';
-        }
-        if(data['device_type']['id'] == 9){
-            result +='<td class="text-center">'+data.temper+'</td>';
-        }
+        
+       
         if(data['device_type']['id'] == 3){
             if(data.nmb_of_shuts != 0){
                 result +='<td class="text-center">'+data.nmb_of_shuts+'</td>';
@@ -298,6 +292,15 @@ function generate_hnml_interventions(data){
              }else{
                 result += '<td class="text-center">---</td>';
              }
+
+        if(data['device_type']['id'] == 9){
+            result +='<td class="text-center">'+data.temper+'</td>';
+        }
+        if(data.note != null){
+            result +='<td class="text-center">'+data.note+'</td>';
+        }else{
+            result +='<td class="text-center">---</td>';
+        }
         result +='</tr>';
     return result; 
 }

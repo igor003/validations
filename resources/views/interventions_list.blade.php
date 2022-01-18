@@ -38,15 +38,18 @@
                       
                       <th class='text-center' scope="col">Intervention description</th>
                       <th class='text-center' scope="col">Duration</th>
-                      <th class='text-center' scope="col">Note</th>
-                      @if($type_machine->id == 9)
-                        <th class='text-center' scope="col">Temperature °C</th>
-                      @endif
+                     
                       @if($type_machine->id == 3)
                         <th class='text-center' scope="col">Number of shuts</th>
                       @endif
                       <th class='text-center' scope="col">Executor</th>
                       <th class='text-center' scope="col">Optional attached file</th>
+                      @if($type_machine->id == 9)
+                        <th class='text-center' scope="col">Measured temperature °C</th>
+                        <th class='text-center' scope="col">Result</th>
+                      @else
+                        <th class='text-center' scope="col">Note</th>
+                      @endif
                     </tr>
                 </thead>
                 <tbody id='interventions_table'>

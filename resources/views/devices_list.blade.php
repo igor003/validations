@@ -81,7 +81,7 @@
                 <tbody>
  
                    @foreach($devices as $device)
-                    
+                 
                         <tr>
                             <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
                             <td class='text-center'>{{$device['inventory_number']}}</td>
@@ -205,7 +205,17 @@
                                             @endif
                                         @endif
                                         @if($device_type['id'] == '3')
-                                            <td class='text-center data_ok'>{{$device['mini_cnt']}}</td>
+
+                                          <!--   @if(array_key_exists('mini_differ', $device))
+                                                @if($device['mini_differ'] < 200000)
+                                                    <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                @else
+                                                    <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                @endif
+                                            @else
+                                                <td class='text-center data_mis'>---</td>
+                                            @endif -->
+                                      <td class='text-center data_ok'>{{$device['mini_cnt']}}</td>
                                         @endif
 
 
