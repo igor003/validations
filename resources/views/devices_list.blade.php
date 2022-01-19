@@ -28,7 +28,7 @@
                 <thead>
                     <tr> 
                         @if($device_type['id'] == '3')
-                            <th colspan="9" class='align-middle text-center bg-info'>General information</th>
+                            <th colspan="10" class='align-middle text-center bg-info'>General information</th>
                         @elseif($device_type['id'] == '4')
                             <th colspan="8" class='align-middle text-center bg-info'>General information</th>
                         @else
@@ -46,11 +46,10 @@
                    
                     <tr>
                         <th class='text-center align-middle bg-info' scope="col">Number</th>
+                        <th class='text-center align-middle bg-info' scope="col">Process</th>
                         <th class='text-center align-middle bg-info' scope="col">Inventory number</th>
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
-                        @if($device_type['id'] == '3')
-                            <th class='text-center align-middle bg-info' scope="col">Total number of shuts</th>
-                        @endif
+                       
                         <th class='text-center align-middle bg-info' scope="col">Maker</th>
                         @if($device_type['id'] == '4')
                             <th class='text-center align-middle bg-info' scope="col">Project</th>
@@ -61,6 +60,7 @@
                         <th class='text-center align-middle bg-info' scope="col">Date of registration</th>
                         @if($device_type['id'] == '3')
                             <th class='text-center align-middle bg-info' scope="col">Info</th>
+                            <th class='text-center align-middle bg-info' scope="col">Total number of shuts</th>
                         @endif
                             <th class='text-center align-middle bg-success' scope="col">Last validation date</th>
                         @if($device_type['periodicity'] == 0)
@@ -84,11 +84,12 @@
                  
                         <tr>
                             <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
+                             <td class='text-center'>{{$device['project']}}</td>
                             <td class='text-center'>{{$device['inventory_number']}}</td>
+                            <!-- процесс -->
+                           
                             <td class='text-center'>{{$device['serial_number']}}</td>
-                            @if($device_type['id'] == '3')
-                                <td class='text-center'>{{$device['mini_cnt']}}</td>
-                            @endif
+                           
 
 
                             <td class='text-center'>{{Str::upper($device['maker'])}}</td>
@@ -104,6 +105,7 @@
                                 @else
                                     <td><a href="/device/info_download/{{$device['id']}}"><img height=35px src="{{asset('img/download.png')}}" alt="download"></a></td>
                                 @endif
+                                <td class='text-center'>{{$device['mini_cnt']}}</td>
                             @endif
                             <td class='text-center'>{{$device['prev_date']}}</td>
                             @if($device_type['periodicity'] == 0)
@@ -206,16 +208,26 @@
                                         @endif
                                         @if($device_type['id'] == '3')
 
-                                          <!--   @if(array_key_exists('mini_differ', $device))
-                                                @if($device['mini_differ'] < 200000)
-                                                    <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                            @if(array_key_exists('mini_differ', $device))
+                                                @if($device['project'] == 'P2(MC)')
+                                                    @if($device['mini_differ'] < 200000)
+                                                        <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                    @else
+                                                        <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                    @endif
+                                                @elseif($device['project'] == 'P1(TSA)')
+                                                    @if($device['mini_differ'] < 400000)
+                                                        <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                    @else
+                                                        <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                    @endif
                                                 @else
-                                                    <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                    <td class='text-center data_mis'>{{$device['mini_differ']}}</td>
                                                 @endif
                                             @else
                                                 <td class='text-center data_mis'>---</td>
-                                            @endif -->
-                                      <td class='text-center data_ok'>{{$device['mini_cnt']}}</td>
+                                            @endif
+                                      <!-- <td class='text-center data_ok'>{{$device['mini_cnt']}}</td> -->
                                         @endif
 
 
