@@ -231,7 +231,7 @@ class DevicesController extends Controller
                             $valid = Validations::where('id_device','=',$cur_device["id"])->orderBy('start_date', 'DESC')->first();
                            
                             if($valid->nmb_shuts !== null){
-                                $differ = $valid->nmb_shuts - $intervent['nmb_of_shuts']; 
+                                $differ = $intervent['nmb_of_shuts'] - $valid->nmb_shuts; 
                             }else{
                                 $differ = $intervent['nmb_of_shuts'];
                             }
