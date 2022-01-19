@@ -4,7 +4,7 @@
 <div class="container">
     <div class="content">       
             <div class="text-center">
-                <img height='300px' width='620px' class='sammy' src="/img/KabLem_logo.png" alt="">
+                <img height='200px' width='620px' class='sammy' src="/img/KabLem_logo.png" alt="">
                 <br>
 
             </div>    
