@@ -33,7 +33,7 @@ class StoreInterventionRequest extends FormRequest
             'duration' =>'required',
             'nmb_of_shuts' =>'sometimes|required', 
             'nmb_of_shuts' =>'sometimes|numeric', 
-            'temper' =>'sometimes|required|min:550|max:700',
+            'temper' =>'sometimes|required|numeric|min:550|max:700',
 
             
         ];
