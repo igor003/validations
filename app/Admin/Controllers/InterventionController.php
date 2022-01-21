@@ -123,7 +123,7 @@ class InterventionController extends AdminController
         $form->time('duration', __('Duration'))->default(date('H:i:s'));
         $form->text('report_path', __('Report path'));
         $form->text('note', __('Note'));
-      
+        $form->number('nmb_of_shuts', __('Number of shuts'));
         return $form;
     }
 }
