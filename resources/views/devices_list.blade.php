@@ -46,7 +46,9 @@
                    
                     <tr>
                         <th class='text-center align-middle bg-info' scope="col">Number</th>
-                        <th class='text-center align-middle bg-info' scope="col">Process</th>
+                        @if($device_type['id'] == '3')
+                            <th class='text-center align-middle bg-info' scope="col">Process</th>
+                        @endif
                         <th class='text-center align-middle bg-info' scope="col">Inventory number</th>
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
                        
@@ -84,7 +86,9 @@
                  
                         <tr>
                             <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
-                             <td class='text-center'>{{$device['project']}}</td>
+                            @if($device_type['id'] == '3')
+                                <td class='text-center'>{{$device['project']}}</td>
+                            @endif
                             <td class='text-center'>{{$device['inventory_number']}}</td>
                             <!-- процесс -->
                            
