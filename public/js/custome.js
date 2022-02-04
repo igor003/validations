@@ -366,7 +366,7 @@ $( document ).ready(function() {
 
 function get_shuts_on_input(){
     $('#shuts').on('change',function(){
-        var cnt = $('#shuts').val();
+        var cnt = parseInt($('#shuts').val());
         var machine = $('#devices').val();
 
         $.ajax({

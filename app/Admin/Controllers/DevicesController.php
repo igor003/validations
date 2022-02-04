@@ -131,7 +131,11 @@ class DevicesController extends AdminController
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
         $form->date('prev_valid_date', __('Prev valid date'))->default(date('Y-m-d'));
         $form->date('next_valid_date', __('Next valid date'))->default(date('Y-m-d'));
+        // $form->saving(function (Form $form) {
 
+        //     dump($form->number);
+
+        // });
         return $form;
     }
 }

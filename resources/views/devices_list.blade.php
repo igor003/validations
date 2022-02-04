@@ -214,8 +214,10 @@
 
                                             @if(array_key_exists('mini_differ', $device))
                                                 @if($device['project'] == 'P2(MC)')
-                                                    @if($device['mini_differ'] < 200000)
+                                                    @if($device['mini_differ'] < 190000)
                                                         <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                    @elseif($device['mini_differ'] > 190000 && $device['mini_differ'] < 200000 )
+                                                        <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
                                                     @else
                                                         <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
                                                     @endif
