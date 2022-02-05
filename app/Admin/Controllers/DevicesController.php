@@ -48,6 +48,7 @@ class DevicesController extends AdminController
         $grid->column('prev_valid_date', __('Prev valid date'));
         $grid->column('next_valid_date', __('Next valid date'));
         $grid->column('info_img', __('Imfo imeage'));
+        $grid->column('data_sheet_path', __('Data sheet'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
         $grid->filter(function($filter){
@@ -55,19 +56,19 @@ class DevicesController extends AdminController
                 $query->where('inventory_number', 'like', "%{$this->input}%");
             }, 'Inventoru number');
         });
-         $grid->filter(function($filter){
+        $grid->filter(function($filter){
             $filter->where(function ($query) {
                 $query->whereHas('device_type', function ($query) {
                     $query->where('name','=', "{$this->input}");
                 });
             }, 'Type machine');
         });
-         $grid->filter(function($filter){
+        $grid->filter(function($filter){
             $filter->where(function ($query) {
                 $query->where('status', 'like', "%{$this->input}%");
             }, 'Status');
         });
-         $grid->filter(function($filter){
+        $grid->filter(function($filter){
             $filter->where(function ($query) {
                 $query->where('model', 'like', "%{$this->input}%");
             }, 'Model');
@@ -99,6 +100,7 @@ class DevicesController extends AdminController
         $show->field('status', __('Status'));
         $show->field('note', __('Note'));
         $show->field('info_img', __('Info'));
+        $show->fiels('data_sheet_path', __('Data sheet'));
         $show->field('start_date', __('Start date'));
         $show->field('prev_valid_date', __('Prev valid date'));
         $show->field('next_valid_date', __('Next valid date'));
@@ -126,6 +128,7 @@ class DevicesController extends AdminController
         $form->text('model', __('Model'));
         $form->radio('push_back',__('Push back'))->options(['1' => 'Yes', '0'=> 'No'])->default('0');
         $form->image('info_img')->move('info_img');
+        $form->file('data_sheet_path')->move('data_sheet');
         $form->select('status','Status')->options(['Production' => 'Production', 'Reserve' => 'Reserve','Send' => 'Send',]);
         $form->text('note', __('Note'));
         $form->date('start_date', __('Start date'))->default(date('Y-m-d'));

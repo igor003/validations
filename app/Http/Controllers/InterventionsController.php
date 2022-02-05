@@ -148,7 +148,7 @@ class InterventionsController extends Controller
         $objDrawing->setName('test_img');
         $objDrawing->setResizeProportional(false);  
         $objDrawing->setDescription('test_img');
-        $objDrawing->setPath('img/SAMMY_logo.jpg');
+        $objDrawing->setPath('img/KabLem_logo.jpg');
         $objDrawing->setCoordinates('A1');                      
         //setOffsetX works properly
         $objDrawing->setOffsetX(4); 

@@ -196,7 +196,8 @@ class DevicesController extends Controller
             $devices[$cnt]['project'] = $cur_device['project'];
             // $devices[$cnt]['note'] = $res; 
             $devices[$cnt]['info_img'] = $cur_device['info_img'];
-            
+            $devices[$cnt]['data_sheet_path'] = $cur_device['data_sheet_path'];
+             
             foreach($type_date as $key=>$value){
                 if($devices[$cnt]['status'] !== 'Production'){
                     $devices[$cnt][$key] = $value;
@@ -298,6 +299,18 @@ class DevicesController extends Controller
         return response()->download($file,basename($device->info_img), $headers);
 
     }
+    public function download_data_sheet ($id){
+        $device = Devices::find($id);
+
+        $file = 'storage/admin/'.$device->data_sheet_path;
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-disposition' => 'attachment; filename=result',
+        ];
+
+        return response()->download($file,basename($device->info_img), $headers);
+
+    }
 
     public function get_by_id_type(Request $request)
     {
@@ -311,7 +324,7 @@ class DevicesController extends Controller
                      
 
          // $diff = array_intersect($maintenented_machines,$machines_by_type);
- // var_dump($machines_by_type);   
+         // var_dump($machines_by_type);   
         return Response::json($machines_by_type);
     }
 

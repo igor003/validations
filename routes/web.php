@@ -44,4 +44,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/gener_excell_rep_filter','InterventionsController@filter_excell_report')->name('filter_excell_report');
     Route::post('/machine_count','DevicesController@get_machine_pices')->name('machine_pices');
     Route::post('/get_shuts','InterventionsController@get_shuts')->name('get_shuts');
+    Route::get('/device/data_sheet_download/{id}','DevicesController@download_data_sheet')->name('download_data_sheet');
 });

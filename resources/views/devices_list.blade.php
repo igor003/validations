@@ -28,7 +28,7 @@
                 <thead>
                     <tr> 
                         @if($device_type['id'] == '3')
-                            <th colspan="10" class='align-middle text-center bg-info'>General information</th>
+                            <th colspan="11" class='align-middle text-center bg-info'>General information</th>
                         @elseif($device_type['id'] == '4')
                             <th colspan="8" class='align-middle text-center bg-info'>General information</th>
                         @else
@@ -62,6 +62,7 @@
                         <th class='text-center align-middle bg-info' scope="col">Date of registration</th>
                         @if($device_type['id'] == '3')
                             <th class='text-center align-middle bg-info' scope="col">Info</th>
+                            <th class='text-center align-middle bg-info' scope="col">Data sheet</th>
                             <th class='text-center align-middle bg-info' scope="col">Total number of shuts</th>
                         @endif
                             <th class='text-center align-middle bg-success' scope="col">Last validation date</th>
@@ -108,6 +109,11 @@
                                     <td><img height=35px src="{{asset('img/error_file.png')}}" alt="download"></td>
                                 @else
                                     <td><a href="/device/info_download/{{$device['id']}}"><img height=35px src="{{asset('img/download.png')}}" alt="download"></a></td>
+                                @endif
+                                @if($device['data_sheet_path'] == null)
+                                    <td><img height=35px src="{{asset('img/error_file.png')}}" alt="download"></td>
+                                @else
+                                    <td><a href="/device/data_sheet_download/{{$device['id']}}"><img height=35px src="{{asset('img/download.png')}}" alt="download"></a></td>
                                 @endif
                                 <td class='text-center'>{{$device['mini_cnt']}}</td>
                             @endif
