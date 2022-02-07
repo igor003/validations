@@ -308,7 +308,7 @@ class DevicesController extends Controller
             'Content-disposition' => 'attachment; filename=result',
         ];
 
-        return response()->download($file,basename($device->info_img), $headers);
+        return response()->download($file,basename($device->data_sheet_path), $headers);
 
     }
 
