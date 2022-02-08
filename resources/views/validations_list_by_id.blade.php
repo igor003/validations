@@ -38,7 +38,7 @@
     
     <br>  
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -63,6 +63,12 @@
                  </tbody>
             </table>
         </div>
+         <div class="col-md-2">
+            @if($device_type->valid_instruction_path)
+               <div class='text-center'><img height='120px' src="{{asset('img/validation_instr.png')}}" alt=""><br> <a href="/download_validation_instruction/{{$device_info->id_type}}"><button class="btn btn-success" type="submit"> Download validation instruction</button></a></div>
+               <br>
+           @endif
+         </div>
     </div>
 </div>
 @endsection

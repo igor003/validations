@@ -264,9 +264,10 @@ $( function() {
 });  
 
 function generate_hnml_interventions(data){
-    console.log(data);
+    
     var result = '<tr>' +
         '<td class="text-center">'+data.date.substring(0, 10)+'</td>'+
+        '<td class="text-center">'+data.device.number+'</td>'+
         '<td class="text-center">'+data.device.inventory_number+'</td>'+
         '<td class="text-center">'+data.type_mentenance.name+'</td>'+
         '<td class="text-center">'+data.intervention.name+'</td>'+

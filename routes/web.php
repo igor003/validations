@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get_interventions', 'InterventionsController@get_by_machine_type_id')->name('get_interv');
     Route::post('/download_interv_report','InterventionsController@download_report')->name('rep_download');
     Route::get('download__machine_instruction/{id}','DeviceTypesController@download_instruction')->name('download_machine_instruction');
+    Route::get('download_validation_instruction/{id}','DeviceTypesController@download_validation_instruction')->name('download_validation_instruction');
+
+
+    
     Route::get('/device/info_download/{id}','DevicesController@download_info')->name('download_info');
     Route::get('/interv_excell_report','InterventionsController@report_generate_view')->name('interv_report_view');
     Route::post('/generate_interv_excell_report','InterventionsController@generate_report')->name('generate_report_excell');

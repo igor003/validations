@@ -33,6 +33,7 @@
                 <thead>
                     <tr>
                       <th class='text-center' scope="col">Date</th>
+                      <th class='text-center' scope="col">Number</th>
                       <th class='text-center' scope="col">Inventory number</th>
                       <th class='text-center' scope="col">Type</th>
                       

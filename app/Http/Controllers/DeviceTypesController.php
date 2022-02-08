@@ -57,5 +57,18 @@ class DeviceTypesController extends Controller
 
         return response()->download($file,basename($dev_type->instruction_path), $headers);
     }
+    public function download_validation_instruction($id){
+      $dev_type = DeviceTypes::find($id);
+
+        $file = 'storage/admin/'.$dev_type->valid_instruction_path;
+
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-disposition' => 'attachment; filename=result',
+        ];
+
+        return response()->download($file,basename($dev_type->valid_instruction_path), $headers);
+    }
 
 }

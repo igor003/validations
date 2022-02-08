@@ -8,7 +8,7 @@ class DeviceTypes extends Model
 {
     protected $table = 'device_types';
     protected $fillable = [
-        'id','index_number', 'name','img_path','instruction_path', 'periodicity','daily','weekly','monthly','three_month','six_month','yearly','machine_request','number of shuts','hours'
+        'id','index_number', 'name','img_path','instruction_path','valid_instruction_path', 'periodicity','daily','weekly','monthly','three_month','six_month','yearly','machine_request','number of shuts','hours'
     ];
 
     public function devices(){

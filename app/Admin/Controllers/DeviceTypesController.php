@@ -31,6 +31,7 @@ class DeviceTypesController extends AdminController
         $grid->column('periodicity', __('Periodicity'));
         $grid->column('img_path', __('Image path'));
         $grid->column('instruction_path', __('Instruction path'));
+        $grid->column('valid_instruction_path', __('Validation instruction path'));  
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -51,6 +52,7 @@ class DeviceTypesController extends AdminController
         $show->field('name', __('Name'));
         $show->field('img_path', __('Image path'));
         $show->field('instruction_path', __('Instruction path'));
+        $show->field('', __('Validation instruction path'));
         $show->field('periodicity', __('Periodicity'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -70,6 +72,7 @@ class DeviceTypesController extends AdminController
         $form->textarea('name', __('Name'));
         $form->number('periodicity', __('Periodicity'));
         $form->file('instruction_path');
+        $form->file('valid_instruction_path');
         $form->image('img_path');
 
         return $form;

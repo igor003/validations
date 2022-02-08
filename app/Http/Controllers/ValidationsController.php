@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Validations;
 use Illuminate\Http\Request;
 use App\Devices;
+use App\DeviceTypes;
 class ValidationsController extends Controller
 {
    
     public function show($id){
         $device_info = Devices::find($id);
+        $device_type = DeviceTypes::find($device_info->id_type);
        
         $validations = Validations::where('id_device',$id)->orderBy('start_date', 'asc')->get();
 
-        return view('validations_list_by_id',['validations'=>$validations,'device_info'=>$device_info]);
+        return view('validations_list_by_id',['validations'=>$validations,'device_info'=>$device_info,'device_type'=>$device_type]);
     }
 
     public function download($id){

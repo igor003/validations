@@ -47,17 +47,28 @@
                     @foreach($device_types_counts as $device_type_count)
                     
                         <tr>
-                          <td class='text-center'><a href="/devices/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info font-weight-bold">{{$device_type_count['1']}}</button></a></td>
-                          <td class='text-center'>{{$device_type_count['2']}}</td>
-                           <td class='text-center'>{{$device_type_count['3']}}</td>
-                            @if($device_type_count['4'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['4'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
+                            <td class='text-center'><a href="/devices/{{$device_type_count['0']}}"><button id='btn_type'  type="button" class="btn btn-info font-weight-bold">                  {{$device_type_count['1']}}</button></a></td>
+                            <td class='text-center'>{{$device_type_count['2']}}</td>
+                            <td class='text-center'>{{$device_type_count['3']}}</td>
+                            @if($device_type_count['4'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['4'] === null)@else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['5'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['5'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['6'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['6'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['7'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['7'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['8'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['8'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['9'] === 1)  <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['9'] === null)  @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['10'] === 1) <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['10'] === null) @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
-                            @if($device_type_count['11'] === 1) <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['11'] === null) @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
+                            @if($device_type_count['11'] === 1 && $device_type_count['1'] == 'Miniaplicatoare')
+                            <td class='align-middle text-center h6 font-weight-bold hatching-green opacity-50'>
+                                    <li style="list-style: none">200000</li>
+                                    <li style="list-style: none">400000</li>
+                            </td> 
+                            @elseif($device_type_count['11'] === 1 && $device_type_count['1'] == 'PCE')
+                            <td class='align-middle text-center h6 font-weight-bold hatching-green opacity-50'>
+                                    <li style="list-style: none">10000</li>
+                                    
+                            </td> 
+                            @elseif($device_type_count['11'] === 1 && $device_type_count['1'] != 'Miniaplicatoare')<td class='align-middle text-center h5 hatching-green opacity-50'> </td> 
+                            @elseif($device_type_count['11'] === null) @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['12'] === 1) <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['12'] === null) @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
 
                         </tr>
