@@ -273,30 +273,30 @@
                         </tr>
                         <tr>
                             <td class='text-center data_ok'>xxxx</td>
-                            <td>until {{$miniTargetP2-$miniDifferP2}}</td>
+                            <td>nmb. of shuts < {{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_warn'>xxxx</td>
-                            <td>between {{$miniTargetP2-$miniDifferP2}} and {{$miniTargetP2}}</td>
+                            <td>{{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP2, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_nok'>xxxx</td>
-                            <td>above {{$miniTargetP2}}</td>
+                            <td>nmb. of shuts > {{number_format($miniTargetP2, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
                             <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P2(MC)</td>
                         </tr>
                         <tr>
                             <td class='text-center data_ok'>xxxx</td>
-                            <td>until {{$miniTargetP1-$miniDifferP1}}</td>
+                            <td>nmb. of shuts < {{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_warn'>xxxx</td>
-                            <td>between {{$miniTargetP1-$miniDifferP1}} and {{$miniTargetP1}}</td>
+                            <td>{{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP1, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_nok'>xxxx</td>
-                            <td>above {{$miniTargetP1}}</td>
+                            <td>nmb. of shuts < {{$miniTargetP1}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -308,15 +308,15 @@
                         </tr>
                         <tr>
                             <td class='text-center data_ok'>xxxx</td>
-                            <td>until {{$pceTarget - $pceDiffer}}</td>
+                            <td>nmb. of shuts < {{$pceTarget - $pceDiffer}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_warn'>xxxx</td>
-                            <td>between {{$pceTarget - $pceDiffer}} and {{$pceTarget}}</td>
+                            <td>{{$pceTarget - $pceDiffer}} < nmb. of shuts < {{$pceTarget}}</td>
                         </tr>
                         <tr>
                             <td class='text-center data_nok'>xxxx</td>
-                            <td>above {{$pceTarget}}</td>
+                            <td>nmb. of shuts < {{$pceTarget}}</td>
                         </tr>
                     </tbody>
                 </table>
