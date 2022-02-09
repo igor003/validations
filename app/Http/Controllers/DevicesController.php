@@ -13,9 +13,25 @@ use Illuminate\Http\Request;
 use DateTime;
 use DateInterval;
 use Carbon\Carbon;
+
 class DevicesController extends Controller
 {
-    public function processing__maintenance_date($date, $type){
+
+    public $miniTargetP1 = 400000;
+    public $miniDifferP1 = 10000;
+    public $miniTargetP2 = 200000;
+    public $miniDifferP2 = 10000;
+    public $pceTarget = 10000;
+    public $pceDiffer = 1000;
+
+    public function params (){
+        return ['miniTargetP1'=> $this->miniTargetP1,
+                'miniTargetP2'=> $this->miniTargetP2,
+                'pceTarget'=> $this->pceTarget
+                ];
+    }
+
+    static function processing__maintenance_date($date, $type){
         $format = "Y-m-d";
         switch($type){
             case "dayli":
@@ -174,10 +190,8 @@ class DevicesController extends Controller
             $cur_device_period = DeviceTypes::where('id',$cur_device['id_type'])->get();
              $res = '--';
             if($cur_device['id_type'] == '4' && $cur_device['model'] == 'LE Solution'){
-                if(CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->first()){
-                  
+                if(CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->first()){  
                     $res = CollaudoLocale::where('NomeBanco','=',$cur_device['number'])->count();
-
                 }else{
                     $res = '--';
                 }
@@ -230,14 +244,11 @@ class DevicesController extends Controller
                         if($cur_device['id_type'] == '3'){
                             $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
                             $valid = Validations::where('id_device','=',$cur_device["id"])->orderBy('start_date', 'DESC')->first();
-                           
                             if($valid->nmb_shuts !== null){
                                 $differ = $intervent['nmb_of_shuts'] - $valid->nmb_shuts; 
                             }else{
                                 $differ = $intervent['nmb_of_shuts'];
                             }
-                            
-                         
                             $devices[$cnt]['mini_cnt'] = $intervent['nmb_of_shuts'];
                             $devices[$cnt]['mini_differ'] = $differ;
                         }
@@ -251,8 +262,7 @@ class DevicesController extends Controller
                 $devices[$cnt]['prev_date'] = '---';
                 $devices[$cnt]['next_date'] = '---';
                 $devices[$cnt]['range'] = 0;
-            }else{
-                     
+            }else{  
                 $devices[$cnt]['prev_date'] = $max_date->start_date;
                 $date =  new DateTime($max_date->start_date);
                 $date->add(new DateInterval('P'.$device_period_month.'M'));
@@ -260,23 +270,25 @@ class DevicesController extends Controller
                 $date2 =  new DateTime( $date->format('Y-m-d'));
                 $date2->sub(new DateInterval('P15D'));
                 $devices[$cnt]['range'] = $date2->format('Y-m-d');
-                
-
             }
-         
             $devices[$cnt]['status'] = $cur_device['status'];
-             
             $cnt++;
-             
         }
- 
         $device_type = DeviceTypes::find($id);
         $date = new DateTime();
         $date->add(new DateInterval('P7D'));
 
-       
-     
-        return view('devices_list',['menten_date'=>$date->format('Y-m-d'),'fields'=>$fields,'devices'=>$devices,'device_type'=>$device_type]);
+        return view('devices_list',['menten_date'=>$date->format('Y-m-d'),
+                                    'fields'=>$fields,
+                                    'devices'=>$devices,
+                                    'device_type'=>$device_type,
+                                    'miniTargetP1'=>$this->miniTargetP1,
+                                    'miniDifferP1'=>$this->miniDifferP1,
+                                    'miniTargetP2'=>$this->miniTargetP2,
+                                    'miniDifferP2'=>$this->miniDifferP2,
+                                    'pceTarget'=>$this->pceTarget,
+                                    'pceDiffer'=>$this->pceDiffer
+                                   ]);
     }
     public function type_inregistration_view($id_disp,$id_type){
         $device_type = DeviceTypes::find($id_type);

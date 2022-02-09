@@ -3,15 +3,18 @@
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/table_head_holder.css') }}" >
-<div class="container">
+<div class="container-fluid">
    
 
     <div class="row justify-content-center">
-      <div class="col-md-2 text-left">
+      <div class="col-md-3 text-right">
           <a href="{{url()->previous()}}"><button class="btn btn-primary" type="submit">Back</button></a>
        </div>
-        <div class="col-md-8 text-center">
+        <div class="col-md-6 text-center">
            <h2><b>MACHINES LIST: {{$device_type->name}} </b></h2>
+       </div>
+       <div class="col-md-3 text-center">
+        
        </div>
      
     
@@ -23,7 +26,10 @@
     </div>
     <br>  
     <div class="row justify-content-center">
-        <div class="col-md-12">
+         <div class="col-md-2">
+            
+        </div>
+        <div class="col-md-6">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr> 
@@ -206,11 +212,11 @@
                                         @if($device_type['id'] == '4')
                                             @if($device['pce_cnt'] === 'n/a')
                                                 <td class='text-center '>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] < 9000)
+                                            @elseif($device['pce_cnt'] < ($pceTarget - $pceDiffer))
                                                 <td class='text-center data_ok'>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] > 9000 && $device['pce_cnt']<10000)
+                                            @elseif($device['pce_cnt'] > ($pceTarget - $pceDiffer) && $device['pce_cnt'] < $pceTarget)
                                                 <td class='text-center data_warn'>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] > 10000)
+                                            @elseif($device['pce_cnt'] > $pceTarget)
                                                 <td class='text-center data_nok'>{{$device['pce_cnt']}}</td>
                                             @else
                                                 <td class='text-center data_mis'>{{$device['pce_cnt']}}</td>
@@ -220,16 +226,18 @@
 
                                             @if(array_key_exists('mini_differ', $device))
                                                 @if($device['project'] == 'P2(MC)')
-                                                    @if($device['mini_differ'] < 190000)
+                                                    @if($device['mini_differ'] < $miniTargetP2-$miniDifferP2)
                                                         <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
-                                                    @elseif($device['mini_differ'] > 190000 && $device['mini_differ'] < 200000 )
+                                                    @elseif($device['mini_differ'] > $miniTargetP2-$miniDifferP2 && $device['mini_differ'] < $miniTargetP2 )
                                                         <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
                                                     @else
                                                         <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
                                                     @endif
                                                 @elseif($device['project'] == 'P1(TSA)')
-                                                    @if($device['mini_differ'] < 400000)
+                                                    @if($device['mini_differ'] < $miniTargetP1)
                                                         <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                    @elseif($device['mini_differ'] > ($miniTargetP1-$miniDifferP1 ) && $device['mini_differ'] < $miniTargetP1 )
+                                                        <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
                                                     @else
                                                         <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
                                                     @endif
@@ -254,6 +262,66 @@
                     @endforeach
                  </tbody>
             </table>
+        </div>
+        <div class="col-md-2 justify-content-center">
+             @if($device_type['id'] == '3')
+                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
+                    
+                    <tbody>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P1(TSA)</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>until {{$miniTargetP2-$miniDifferP2}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>between {{$miniTargetP2-$miniDifferP2}} and {{$miniTargetP2}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>above {{$miniTargetP2}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P2(MC)</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>until {{$miniTargetP1-$miniDifferP1}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>between {{$miniTargetP1-$miniDifferP1}} and {{$miniTargetP1}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>above {{$miniTargetP1}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            @elseif($device_type['id'] == '4')
+                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
+                    <tbody>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>until {{$pceTarget - $pceDiffer}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>between {{$pceTarget - $pceDiffer}} and {{$pceTarget}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>above {{$pceTarget}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            @endif
         </div>
     </div>
 </div>

@@ -31,6 +31,7 @@ thead {
   z-index: 2;
 }
 
+
 th[scope=row] {
   position: -webkit-sticky;
   position: sticky;

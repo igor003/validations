@@ -59,12 +59,12 @@
                             @if($device_type_count['10'] === 1) <td class='align-middle text-center h5 hatching-green opacity-50'> </td> @elseif($device_type_count['10'] === null) @else <td class='align-middle text-center h5 opacity-50'>n/a</td> @endif
                             @if($device_type_count['11'] === 1 && $device_type_count['1'] == 'Miniaplicatoare')
                             <td class='align-middle text-center h6 font-weight-bold hatching-green opacity-50'>
-                                    <li style="list-style: none">200000</li>
-                                    <li style="list-style: none">400000</li>
+                                    <li style="list-style: none">{{number_format($targetP2, 0, '', ' ')}}</li>
+                                    <li style="list-style: none">{{number_format($targetP1, 0, '', ' ')}}</li>
                             </td> 
                             @elseif($device_type_count['11'] === 1 && $device_type_count['1'] == 'PCE')
                             <td class='align-middle text-center h6 font-weight-bold hatching-green opacity-50'>
-                                    <li style="list-style: none">10000</li>
+                                    <li style="list-style: none">{{number_format($targetPCE, 0, '', ' ')}}</li>
                                     
                             </td> 
                             @elseif($device_type_count['11'] === 1 && $device_type_count['1'] != 'Miniaplicatoare')<td class='align-middle text-center h5 hatching-green opacity-50'> </td> 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DeviceTypes;
 use App\Devices;
 use App\User;
+use App\Http\Controllers\DevicesController;
 class DeviceTypesController extends Controller
 {
     public function show (Request $request){
@@ -39,8 +40,11 @@ class DeviceTypesController extends Controller
     		$cnt++;
     			
     	} 
+        $deviceContr = new DevicesController();
+    
+         return view('device_types_view',['device_types_counts'=>$dev_types_count,'targetP1'=>$deviceContr->miniTargetP1,'targetP2'=>$deviceContr->miniTargetP2,'targetPCE'=>$deviceContr->pceTarget]);
 
-    	return view('device_types_view',['device_types_counts'=>$dev_types_count]);
+    	// return view('device_types_view',['device_types_counts'=>$dev_types_count,'targetP1'=>Devices::$miniTargetP1,'targetP2'=>Devices::$miniTargetP2,'targetPCE'=>$Devices::$pceTarget]);
 
     }
 
