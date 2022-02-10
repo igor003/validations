@@ -26,10 +26,10 @@
     </div>
     <br>  
     <div class="row justify-content-center">
-         <div class="col-md-2">
+         <div class="col-xl-2 col-lg-0 ">
             
         </div>
-        <div class="col-md-6">
+        <div class="col-xl-8 col-lg-12">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr> 
@@ -263,9 +263,9 @@
                  </tbody>
             </table>
         </div>
-        <div class="col-md-2 justify-content-center">
+        <div class="col-xs-2 col-lg-0 justify-content-center">
              @if($device_type['id'] == '3')
-                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
+                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered '>
                     
                     <tbody>
                         <tr>
