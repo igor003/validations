@@ -266,14 +266,15 @@ class DevicesController extends Controller
                 $devices[$cnt]['next_date'] = '---';
                 $devices[$cnt]['range'] = 0;
             }else{  
-                $date2 = new DateTime($max_date->start_date);
-                $devices[$cnt]['prev_date'] = $date2->format('d-m-Y');
+                $date22 = new DateTime($max_date->start_date);
+                $devices[$cnt]['prev_date'] = $date22->format('d-m-Y');
                 $date =  new DateTime($max_date->start_date);
                 $date->add(new DateInterval('P'.$device_period_month.'M'));
                 $devices[$cnt]['next_date'] = $date->format('d-m-Y');
                 $date2 =  new DateTime( $date->format('d-m-Y'));
                 $date2->sub(new DateInterval('P15D'));
                 $devices[$cnt]['range'] = $date2->format('d-m-Y');
+
             }
             $devices[$cnt]['status'] = $cur_device['status'];
             $cnt++;

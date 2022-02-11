@@ -147,7 +147,7 @@
                 <tbody>
  
                    @foreach($devices as $device)
-                 
+         
                         <tr>
                             <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
                             @if($device_type['id'] == '3')
@@ -185,13 +185,13 @@
 
                             @else
                                 @if($device['range'] && $device_type['periodicity'] > 0 &&  $device['status'] !=='Send' && $device['status']!=='Reserve')
-                                    @if(date("Y-m-d")<$device['next_date'] && date("Y-m-d")<$device['range'])
+                                    @if(date("d-m-Y")< strtotime($device['next_date']) && date("d-m-Y")< strtotime($device['range']))
                                         <td class='text-center data_ok'>{{$device['next_date']}}</td>
-                                    @elseif(date("Y-m-d")<$device['next_date'] && date("Y-m-d")>$device['range'] || date("Y-m-d") == $device['range']|| date("Y-m-d") == $device['next_date'])
+                                    @elseif(date("d-m-Y")<$device['next_date'] && date("d-m-Y")>$device['range'] || date("d-m-Y") == $device['range']|| date("d-m-Y") == $device['next_date'])
                                         <td class='text-center data_warn '>{{$device['next_date']}}</td>
-                                    @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'] && $device['status'] == 'Production')
+                                    @elseif(date("d-m-Y")>$device['next_date'] && date("d-m-Y")>$device['range'] && $device['status'] == 'Production')
                                         <td class='text-center data_nok '>{{$device['next_date']}}</td>
-                                    @elseif(date("Y-m-d")>$device['next_date'] && date("Y-m-d")>$device['range'] && ($device['status'] == 'Reserve' || $device['status'] == 'Send') )
+                                    @elseif(date("d-m-Y")>$device['next_date'] && date("d-m-Y")>$device['range'] && ($device['status'] == 'Reserve' || $device['status'] == 'Send') )
                                         <td class='text-center'>{{$device['next_date']}}</td>
                                     @else
                                         <td class='text-center bg-danger'>{{$device['next_date']}}</td>
