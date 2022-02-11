@@ -282,7 +282,7 @@ class DevicesController extends Controller
         $device_type = DeviceTypes::find($id);
         $date = new DateTime();
         $date->add(new DateInterval('P7D'));
-
+        $curdate = strtotime(date('d-m-Y'));
         return view('devices_list',['menten_date'=>$date->format('d-m-Y'),
                                     'fields'=>$fields,
                                     'devices'=>$devices,
@@ -292,7 +292,8 @@ class DevicesController extends Controller
                                     'miniTargetP2'=>$this->miniTargetP2,
                                     'miniDifferP2'=>$this->miniDifferP2,
                                     'pceTarget'=>$this->pceTarget,
-                                    'pceDiffer'=>$this->pceDiffer
+                                    'pceDiffer'=>$this->pceDiffer,
+                                    'curdate'=>$curdate
                                    ]);
     }
     public function type_inregistration_view($id_disp,$id_type){
