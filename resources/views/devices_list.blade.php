@@ -27,7 +27,64 @@
     <br>  
     <div class="row justify-content-center">
          <div class="col-xl-2 col-lg-0 ">
-            
+                @if($device_type['id'] == '3')
+                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered '>
+                    
+                    <tbody>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P1(TSA)</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>nmb. of shuts < {{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>{{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP2, 0, '', ' ')}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>nmb. of shuts > {{number_format($miniTargetP2, 0, '', ' ')}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P2(MC)</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>nmb. of shuts < {{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>{{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP1, 0, '', ' ')}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>nmb. of shuts < {{$miniTargetP1}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            @elseif($device_type['id'] == '4')
+                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
+                    <tbody>
+                        <tr>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_ok'>xxxx</td>
+                            <td>nmb. of shuts < {{$pceTarget - $pceDiffer}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_warn'>xxxx</td>
+                            <td>{{$pceTarget - $pceDiffer}} < nmb. of shuts < {{$pceTarget}}</td>
+                        </tr>
+                        <tr>
+                            <td class='text-center data_nok'>xxxx</td>
+                            <td>nmb. of shuts < {{$pceTarget}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            @endif
         </div>
         <div class="col-xl-8 col-lg-12">
             <table class="table table-bordered table-hover">
@@ -264,64 +321,7 @@
             </table>
         </div>
         <div class="col-xs-2 col-lg-0 justify-content-center">
-             @if($device_type['id'] == '3')
-                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered '>
-                    
-                    <tbody>
-                        <tr>
-                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P1(TSA)</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_ok'>xxxx</td>
-                            <td>nmb. of shuts < {{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_warn'>xxxx</td>
-                            <td>{{number_format($miniTargetP2-$miniDifferP2, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP2, 0, '', ' ')}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_nok'>xxxx</td>
-                            <td>nmb. of shuts > {{number_format($miniTargetP2, 0, '', ' ')}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P2(MC)</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_ok'>xxxx</td>
-                            <td>nmb. of shuts < {{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_warn'>xxxx</td>
-                            <td>{{number_format($miniTargetP1-$miniDifferP1, 0, '', ' ')}} < nmb. of shuts < {{number_format($miniTargetP1, 0, '', ' ')}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_nok'>xxxx</td>
-                            <td>nmb. of shuts < {{$miniTargetP1}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            @elseif($device_type['id'] == '4')
-                <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
-                    <tbody>
-                        <tr>
-                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_ok'>xxxx</td>
-                            <td>nmb. of shuts < {{$pceTarget - $pceDiffer}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_warn'>xxxx</td>
-                            <td>{{$pceTarget - $pceDiffer}} < nmb. of shuts < {{$pceTarget}}</td>
-                        </tr>
-                        <tr>
-                            <td class='text-center data_nok'>xxxx</td>
-                            <td>nmb. of shuts < {{$pceTarget}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            @endif
+         
         </div>
     </div>
 </div>

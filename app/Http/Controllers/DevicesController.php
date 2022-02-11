@@ -204,7 +204,8 @@ class DevicesController extends Controller
             $devices[$cnt]['inventory_number'] = $cur_device['inventory_number'];
             $devices[$cnt]['maker'] = $cur_device['maker'];
             $devices[$cnt]['model'] = $cur_device['model'];
-            $devices[$cnt]['start_date'] = $cur_device['start_date'];
+            $date_start = new DateTime($cur_device['start_date']);
+            $devices[$cnt]['start_date'] = $date_start->format('d-m-Y');
             $devices[$cnt]['status'] = $cur_device['status'];
             $devices[$cnt]['note'] = $cur_device['note'];
             $devices[$cnt]['project'] = $cur_device['project'];
@@ -213,8 +214,9 @@ class DevicesController extends Controller
             $devices[$cnt]['data_sheet_path'] = $cur_device['data_sheet_path'];
              
             foreach($type_date as $key=>$value){
+                 $date_period = new DateTime($value);
                 if($devices[$cnt]['status'] !== 'Production'){
-                    $devices[$cnt][$key] = $value;
+                    $devices[$cnt][$key] = $date_period->format('d-m-Y');
                     $devices[$cnt]['lights_w'] = 'secondary';
                     $devices[$cnt]['lights_m'] = 'secondary';
                     $devices[$cnt]['lights_y'] = 'secondary';
@@ -223,17 +225,18 @@ class DevicesController extends Controller
                         $devices[$cnt]['pce_cnt'] = $this->get_count_of_pices_pce($cur_device["id"],$cur_device['number']);
                     }
                 }else{
+                   
                     if($key == 'weekly'){
-                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
                         $devices[$cnt]['lights_w'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'monthly'){
-                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
                         $devices[$cnt]['lights_m'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'yearly'){
-                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
                         $devices[$cnt]['lights_y'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'number_of_shuts'){ 
-                        $devices[$cnt][$key] = $value; 
+                        $devices[$cnt][$key] = $date_period->format('d-m-Y'); 
                         if($cur_device['id_type'] == '4'){
                            if($cur_device['push_back'] == '1'){
                                 $devices[$cnt]['pce_cnt'] = $this->get_count_of_pices_pce($cur_device["id"],$cur_device['number']);
@@ -254,7 +257,7 @@ class DevicesController extends Controller
                         }
                     }
                     else{
-                        $devices[$cnt][$key] = $value;
+                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
                     }
                 }
             }
@@ -263,13 +266,14 @@ class DevicesController extends Controller
                 $devices[$cnt]['next_date'] = '---';
                 $devices[$cnt]['range'] = 0;
             }else{  
-                $devices[$cnt]['prev_date'] = $max_date->start_date;
+                $date2 = new DateTime($max_date->start_date);
+                $devices[$cnt]['prev_date'] = $date2->format('d-m-Y');
                 $date =  new DateTime($max_date->start_date);
                 $date->add(new DateInterval('P'.$device_period_month.'M'));
-                $devices[$cnt]['next_date'] = $date->format('Y-m-d');
-                $date2 =  new DateTime( $date->format('Y-m-d'));
+                $devices[$cnt]['next_date'] = $date->format('d-m-Y');
+                $date2 =  new DateTime( $date->format('d-m-Y'));
                 $date2->sub(new DateInterval('P15D'));
-                $devices[$cnt]['range'] = $date2->format('Y-m-d');
+                $devices[$cnt]['range'] = $date2->format('d-m-Y');
             }
             $devices[$cnt]['status'] = $cur_device['status'];
             $cnt++;
@@ -278,7 +282,7 @@ class DevicesController extends Controller
         $date = new DateTime();
         $date->add(new DateInterval('P7D'));
 
-        return view('devices_list',['menten_date'=>$date->format('Y-m-d'),
+        return view('devices_list',['menten_date'=>$date->format('d-m-Y'),
                                     'fields'=>$fields,
                                     'devices'=>$devices,
                                     'device_type'=>$device_type,
