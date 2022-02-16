@@ -214,9 +214,16 @@ class DevicesController extends Controller
             $devices[$cnt]['data_sheet_path'] = $cur_device['data_sheet_path'];
              
             foreach($type_date as $key=>$value){
-                 $date_period = new DateTime($value);
+                if($value){
+                    $date_period = new DateTime($value);
+                    $date_period_format = $date_period->format('d-m-Y');
+                }else{
+                   $date_period_format = "---";
+                }
+               
+                  
                 if($devices[$cnt]['status'] !== 'Production'){
-                    $devices[$cnt][$key] = $date_period->format('d-m-Y');
+                    $devices[$cnt][$key] = $date_period_format;
                     $devices[$cnt]['lights_w'] = 'secondary';
                     $devices[$cnt]['lights_m'] = 'secondary';
                     $devices[$cnt]['lights_y'] = 'secondary';
@@ -227,16 +234,16 @@ class DevicesController extends Controller
                 }else{
                    
                     if($key == 'weekly'){
-                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
+                        $devices[$cnt][$key] = $date_period_format;
                         $devices[$cnt]['lights_w'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'monthly'){
-                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
+                        $devices[$cnt][$key] = $date_period_format;
                         $devices[$cnt]['lights_m'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'yearly'){
-                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
+                        $devices[$cnt][$key] = $date_period_format;
                         $devices[$cnt]['lights_y'] = $this->processing__maintenance_date($value,$key);
                     }elseif($key == 'number_of_shuts'){ 
-                        $devices[$cnt][$key] = $date_period->format('d-m-Y'); 
+                        $devices[$cnt][$key] = $date_period_format;
                         if($cur_device['id_type'] == '4'){
                            if($cur_device['push_back'] == '1'){
                                 $devices[$cnt]['pce_cnt'] = $this->get_count_of_pices_pce($cur_device["id"],$cur_device['number']);
@@ -257,7 +264,7 @@ class DevicesController extends Controller
                         }
                     }
                     else{
-                        $devices[$cnt][$key] = $date_period->format('d-m-Y');
+                        $devices[$cnt][$key] = $date_period_format;
                     }
                 }
             }

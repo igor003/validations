@@ -26,8 +26,9 @@
     </div>
     <br>  
     <div class="row justify-content-center">
-         <div class="col-xl-2 col-lg-0 ">
+    
                 @if($device_type['id'] == '3')
+                <div class="col-xl-2 col-lg-0 ">
                 <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered '>
                     
                     <tbody>
@@ -63,7 +64,9 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             @elseif($device_type['id'] == '4')
+                 <div class="col-xl-2 col-lg-0 ">
                 <table style='position: sticky;top: 0;'  class='ml-4 table table-bordered legend '>
                     <tbody>
                         <tr>
@@ -83,10 +86,10 @@
                         </tr>
                     </tbody>
                 </table>
-
+                </div>
             @endif
-        </div>
-        <div class="col-xl-8 col-lg-12">
+    
+        <div class="col-xl-6 col-lg-12">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr> 
@@ -108,14 +111,14 @@
                     </tr>
                    
                     <tr>
-                        <th class='text-center align-middle bg-info' scope="col">Number</th>
+                        <th style="width: 5.66%" class='text-center align-middle bg-info' scope="col">Number</th>
                         @if($device_type['id'] == '3')
-                            <th class='text-center align-middle bg-info' scope="col">Process</th>
+                            <th style="width: 6%" class='text-center align-middle bg-info' scope="col">Process</th>
                         @endif
-                        <th class='text-center align-middle bg-info' scope="col">Inventory number</th>
+                        <th style="width: 7%" class='text-center align-middle bg-info' scope="col">Inventory number</th>
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
                        
-                        <th class='text-center align-middle bg-info' scope="col">Maker</th>
+                        <th  style="width: 7%"class='text-center align-middle bg-info' scope="col">Maker</th>
                         @if($device_type['id'] == '4')
                             <th class='text-center align-middle bg-info' scope="col">Project</th>
                         @endif
@@ -128,11 +131,11 @@
                             <th class='text-center align-middle bg-info' scope="col">Data sheet</th>
                             <th class='text-center align-middle bg-info' scope="col">Total number of shuts</th>
                         @endif
-                            <th class='text-center align-middle bg-success' scope="col">Last validation date</th>
+                            <th class='text-center align-middle bg-success' scope="col">Last date</th>
                         @if($device_type['periodicity'] == 0)
 
                         @else
-                            <th class='text-center align-middle bg-success' scope="col">Next validation date</th>
+                            <th class='text-center align-middle bg-success' scope="col">Next date</th>
                         @endif
                        
                        
@@ -157,9 +160,6 @@
                             <!-- процесс -->
                            
                             <td class='text-center'>{{$device['serial_number']}}</td>
-                           
-
-
                             <td class='text-center'>{{Str::upper($device['maker'])}}</td>
                             @if($device_type['id'] == '4')   
                                 <td class='text-center'>{{$device['project']}}</td>
@@ -203,124 +203,109 @@
                                     <td class='text-center bg-danger'>{{$device['next_date']}}</td>
                                 @endif
                             @endif
-                            
-
                             @foreach($fields as $field)
-                             
-                               <!--  @if($device[$field])
-                                    <td class='text-center bg-success'>{{$device[$field]}}</td>
-                                    
-                                @else
-                                    <td class='text-center bg-warning'>{{$device[$field]}}</td>  
-                                @endif -->
-                                    @if($field === 'weekly')
-                                        @if($device['lights_w'] === false )
-                                            <td class='text-center'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_w'] === 'info') 
-                                            <td class='text-center data_info'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_w'] === 'success')
-                                            <td class='text-center data_ok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_w'] === 'warning')
-                                            <td class='text-center data_warn'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_w'] === 'danger')
-                                            <td class='text-center data_nok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_w'] === 'secondary')
-                                            <td class='text-center data_mis'>{{$device[$field]}}</td>
-                                        @else
-                                            <td class='text-center'>{{$device[$field]}}</td>
-                                        @endif
-                                    @endif
-                                    @if($field === 'monthly')
-                                        @if($device['lights_m'] === false )
-                                            <td class='text-center'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_m'] === 'info') 
-                                            <td class='text-center data_info'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_m'] === 'success')
-                                            <td class='text-center data_ok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_m'] === 'warning')
-                                            <td class='text-center data_warn'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_m'] === 'danger')
-                                            <td class='text-center data_nok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_m'] === 'secondary')
-                                            <td class='text-center data_mis'>{{$device[$field]}}</td>
-                                        @else
-                                            <td class='text-center  '>{{$device[$field]}}</td>
-                                        @endif
-                                    @endif
-                                    @if($field === 'yearly')
-                                        @if($device['lights_y'] === false )
-                                            <td class='text-center'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_y'] === 'info') 
-                                            <td class='text-center '>{{$device[$field]}}</td>
-                                        @elseif($device['lights_y'] === 'success')
-                                            <td class='text-center data_ok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_y'] === 'warning')
-                                            <td class='text-center data_warn'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_y'] === 'danger')
-                                            <td class='text-center data_nok'>{{$device[$field]}}</td>
-                                        @elseif($device['lights_y'] === 'secondary')
-                                            <td class='text-center data_mis'>{{$device[$field]}}</td>
-                                        @else
-                                            <td class='text-center'>{{$device[$field]}}</td>
-                                        @endif
-                                    @endif
-
-                                    @if($field === 'number_of_shuts')
-                                        @if($device_type['id'] == '4')
-                                            @if($device['pce_cnt'] === 'n/a')
-                                                <td class='text-center '>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] < ($pceTarget - $pceDiffer))
-                                                <td class='text-center data_ok'>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] > ($pceTarget - $pceDiffer) && $device['pce_cnt'] < $pceTarget)
-                                                <td class='text-center data_warn'>{{$device['pce_cnt']}}</td>
-                                            @elseif($device['pce_cnt'] > $pceTarget)
-                                                <td class='text-center data_nok'>{{$device['pce_cnt']}}</td>
-                                            @else
-                                                <td class='text-center data_mis'>{{$device['pce_cnt']}}</td>
-                                            @endif
-                                        @endif
-                                        @if($device_type['id'] == '3')
-
-                                            @if(array_key_exists('mini_differ', $device))
-                                                @if($device['project'] == 'P2(MC)')
-                                                    @if($device['mini_differ'] < $miniTargetP2-$miniDifferP2)
-                                                        <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
-                                                    @elseif($device['mini_differ'] > $miniTargetP2-$miniDifferP2 && $device['mini_differ'] < $miniTargetP2 )
-                                                        <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
-                                                    @else
-                                                        <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
-                                                    @endif
-                                                @elseif($device['project'] == 'P1(TSA)')
-                                                    @if($device['mini_differ'] < $miniTargetP1)
-                                                        <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
-                                                    @elseif($device['mini_differ'] > ($miniTargetP1-$miniDifferP1 ) && $device['mini_differ'] < $miniTargetP1 )
-                                                        <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
-                                                    @else
-                                                        <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
-                                                    @endif
-                                                @else
-                                                    <td class='text-center data_mis'>{{$device['mini_differ']}}</td>
-                                                @endif
-                                            @else
-                                                <td class='text-center data_mis'>---</td>
-                                            @endif
-                                      <!-- <td class='text-center data_ok'>{{$device['mini_cnt']}}</td> -->
-                                        @endif
-
-
-                                    @endif
-                                    @if($field === 'machine_request')
+                                @if($field === 'weekly')
+                                    @if($device['lights_w'] === false )
+                                        <td class='text-center'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_w'] === 'info') 
+                                        <td class='text-center data_info'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_w'] === 'success')
+                                        <td class='text-center data_ok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_w'] === 'warning')
+                                        <td class='text-center data_warn'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_w'] === 'danger')
+                                        <td class='text-center data_nok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_w'] === 'secondary')
+                                        <td class='text-center data_mis'>{{$device[$field]}}</td>
+                                    @else
                                         <td class='text-center'>{{$device[$field]}}</td>
                                     @endif
+                                @endif
+                                @if($field === 'monthly')
+                                    @if($device['lights_m'] === false )
+                                        <td class='text-center'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_m'] === 'info') 
+                                        <td class='text-center data_info'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_m'] === 'success')
+                                        <td class='text-center data_ok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_m'] === 'warning')
+                                        <td class='text-center data_warn'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_m'] === 'danger')
+                                        <td class='text-center data_nok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_m'] === 'secondary')
+                                        <td class='text-center data_mis'>{{$device[$field]}}</td>
+                                    @else
+                                        <td class='text-center  '>{{$device[$field]}}</td>
+                                    @endif
+                                @endif
+                                @if($field === 'yearly')
+                                    @if($device['lights_y'] === false )
+                                        <td class='text-center'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_y'] === 'info') 
+                                        <td class='text-center '>{{$device[$field]}}</td>
+                                    @elseif($device['lights_y'] === 'success')
+                                        <td class='text-center data_ok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_y'] === 'warning')
+                                        <td class='text-center data_warn'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_y'] === 'danger')
+                                        <td class='text-center data_nok'>{{$device[$field]}}</td>
+                                    @elseif($device['lights_y'] === 'secondary')
+                                        <td class='text-center data_mis'>{{$device[$field]}}</td>
+                                    @else
+                                        <td class='text-center'>{{$device[$field]}}</td>
+                                    @endif
+                                @endif
+                                @if($field === 'number_of_shuts')
+                                    @if($device_type['id'] == '4')
+                                        @if($device['pce_cnt'] === 'n/a')
+                                            <td class='text-center '>{{$device['pce_cnt']}}</td>
+                                        @elseif($device['pce_cnt'] < ($pceTarget - $pceDiffer))
+                                            <td class='text-center data_ok'>{{$device['pce_cnt']}}</td>
+                                        @elseif($device['pce_cnt'] > ($pceTarget - $pceDiffer) && $device['pce_cnt'] < $pceTarget)
+                                            <td class='text-center data_warn'>{{$device['pce_cnt']}}</td>
+                                        @elseif($device['pce_cnt'] > $pceTarget)
+                                            <td class='text-center data_nok'>{{$device['pce_cnt']}}</td>
+                                        @else
+                                            <td class='text-center data_mis'>{{$device['pce_cnt']}}</td>
+                                        @endif
+                                    @endif
+                                    @if($device_type['id'] == '3')
+                                        @if(array_key_exists('mini_differ', $device))
+                                            @if($device['project'] == 'P2(MC)')
+                                                @if($device['mini_differ'] < $miniTargetP2-$miniDifferP2)
+                                                    <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                @elseif($device['mini_differ'] > $miniTargetP2-$miniDifferP2 && $device['mini_differ'] < $miniTargetP2 )
+                                                    <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
+                                                @else
+                                                    <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                @endif
+                                            @elseif($device['project'] == 'P1(TSA)')
+                                                @if($device['mini_differ'] < $miniTargetP1)
+                                                    <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
+                                                @elseif($device['mini_differ'] > ($miniTargetP1-$miniDifferP1 ) && $device['mini_differ'] < $miniTargetP1 )
+                                                    <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
+                                                @else
+                                                    <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
+                                                @endif
+                                            @else
+                                                <td class='text-center data_mis'>{{$device['mini_differ']}}</td>
+                                            @endif
+                                        @else
+                                            <td class='text-center data_mis'>---</td>
+                                        @endif
+                                    @endif
+                                @endif
+                                @if($field === 'machine_request')
+                                    <td class='text-center'>{{$device[$field]}}</td>
+                                @endif
                             @endforeach
                             <td class='text-center'>{{$device['note']}}</td>
-
                         </tr>
                     @endforeach
                  </tbody>
             </table>
         </div>
-        <div class="col-xs-2 col-lg-0 justify-content-center">
+        <div class="col-xs-3 col-lg-0 justify-content-center">
          
         </div>
     </div>
