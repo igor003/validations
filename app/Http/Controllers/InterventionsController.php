@@ -36,7 +36,13 @@ class InterventionsController extends Controller
             $path = $request->file('report')->storeAs('public\\admin\\files\\reports', $file_decision);
         }
         $intervention = new Interventions;
+        
+        if($request->cycle == 'on'){
 
+            $device = Devices::find($request->device);
+            $device->cycles =  (int)$device->cycles + 1;
+            $device->save();
+        }
         $intervention->date = $request->date;
         $intervention->id_type_mentenance = $request->type_mentenance;
         $intervention->id_machine = $request->device;

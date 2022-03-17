@@ -253,13 +253,17 @@ class DevicesController extends Controller
                         }
                         if($cur_device['id_type'] == '3'){
                             $intervent = Interventions::where('id_machine','=',$cur_device["id"])->orderBy('date', 'DESC')->first();
+                            $cycles = Devices::find($cur_device['id']);
+                           
+                            $nmb_of_shuts = $intervent['nmb_of_shuts']+(10000000*(int)$cycles->cycles)+(int)$cycles->tail;
+                                
                             $valid = Validations::where('id_device','=',$cur_device["id"])->orderBy('start_date', 'DESC')->first();
                             if($valid->nmb_shuts !== null){
-                                $differ = $intervent['nmb_of_shuts'] - $valid->nmb_shuts; 
+                                $differ = $nmb_of_shuts - $valid->nmb_shuts; 
                             }else{
-                                $differ = $intervent['nmb_of_shuts'];
+                                $differ = $nmb_of_shuts;
                             }
-                            $devices[$cnt]['mini_cnt'] = $intervent['nmb_of_shuts'];
+                            $devices[$cnt]['mini_cnt'] = $nmb_of_shuts;
                             $devices[$cnt]['mini_differ'] = $differ;
                         }
                     }

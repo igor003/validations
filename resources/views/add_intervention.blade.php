@@ -49,9 +49,9 @@
 							<option value ='' selected></option>
 					</select>
 					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="show_all">
-					  <label class="form-check-label" for="show_all">
-					    Show all
+					  <input class="form-check-input" type="checkbox" name='cycle' id="cycle">
+					  <label class="form-check-label" for="show_all" >
+					    Cycle
 					  </label>
 					</div>
 				</div>
