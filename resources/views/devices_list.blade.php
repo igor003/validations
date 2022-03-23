@@ -33,7 +33,7 @@
                     
                     <tbody>
                         <tr>
-                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P1(TSA)</td>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2">Number of shuts P2(MC)</td>
                         </tr>
                         <tr>
                             <td class='text-center data_ok'>xxxx</td>
@@ -48,7 +48,7 @@
                             <td>nmb. of shuts > {{number_format($miniTargetP2, 0, '', ' ')}}</td>
                         </tr>
                         <tr>
-                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P2(MC)</td>
+                            <td class='text-center bg-secondary text-white font-weight-bold' colspan="2"> Number of shuts P1(TSA) </td>
                         </tr>
                         <tr>
                             <td class='text-center data_ok'>xxxx</td>
