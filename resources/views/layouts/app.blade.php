@@ -46,6 +46,9 @@
                         <li class='nav-item'>    
                             <a class='nav-link' href="/interv_excell_report">Report_interventions</a>
                         </li>   
+                        <li class='nav-item'>    
+                            <a class='nav-link' href="/mini_report">Report_mini</a>
+                        </li> 
                         @endguest
 
                         
