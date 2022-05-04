@@ -7,6 +7,7 @@ use App\Devices;
 use App\DeviceTypes;
 use App\Interventions;
 use App\TypeInterventions;
+use App\TypeMentenance;
 use App\CollaudoLocale;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -204,6 +205,7 @@ class DevicesController extends Controller
             $devices[$cnt]['inventory_number'] = $cur_device['inventory_number'];
             $devices[$cnt]['maker'] = $cur_device['maker'];
             $devices[$cnt]['model'] = $cur_device['model'];
+             $devices[$cnt]['ordin_nmb'] = $cur_device['ordin_nmb'];
             $date_start = new DateTime($cur_device['start_date']);
             $devices[$cnt]['start_date'] = $date_start->format('d-m-Y');
             $devices[$cnt]['status'] = $cur_device['status'];
@@ -310,8 +312,24 @@ class DevicesController extends Controller
     public function type_inregistration_view($id_disp,$id_type){
         $device_type = DeviceTypes::find($id_type);
         $device = Devices::find($id_disp);
+        if($id_type == 3){
+            $intervent = Interventions::where('id_machine','=',$id_disp)->orderBy('date', 'DESC')->first();
+            $menten_types = TypeMentenance::all();
+            $menten_types_count = [['type of mentenance','number of interentions']];
+            foreach($menten_types as $menten_type){
 
-        return view('type_inregistration',['device'=>$device,'id'=>$id_type,'device_types'=>$device_type]);
+                $count_cur_intev = Interventions::where('id_machine','=',$id_disp)->where('id_type_mentenance','=',$menten_type->id)->count();
+                
+                array_push($menten_types_count,[$menten_type->name,$count_cur_intev]);
+            }
+          
+           
+            $device = Devices::find($id_disp);          
+            $nmb_of_shuts = $intervent['nmb_of_shuts']+(10000000*(int)$device->cycles)+(int)$device->tail;
+            return view('type_inregistration',['last_valid'=>$intervent['date'],'nmb_of_shuts'=>$nmb_of_shuts,'type_count'=>json_encode($menten_types_count),'device'=>$device,'id'=>$id_type,'device_types'=>$device_type]);
+        }else{
+            return view('type_inregistration',['device'=>$device,'id'=>$id_type,'device_types'=>$device_type]);
+        }
     }
 
     public function download_info ($id){

@@ -94,7 +94,7 @@
                 <thead>
                     <tr> 
                         @if($device_type['id'] == '3')
-                            <th colspan="11" class='align-middle text-center bg-info'>General information</th>
+                            <th colspan="12" class='align-middle text-center bg-info'>General information</th>
                         @elseif($device_type['id'] == '4')
                             <th colspan="8" class='align-middle text-center bg-info'>General information</th>
                         @else
@@ -116,6 +116,10 @@
                             <th style="width: 6%" class='text-center align-middle bg-info' scope="col">Process</th>
                         @endif
                         <th style="width: 7%" class='text-center align-middle bg-info' scope="col">Inventory number</th>
+                       
+                        @if($device_type['id'] == '3')
+                            <th style="width: 6%" class='text-center align-middle bg-info' scope="col">Storage cell</th>
+                        @endif
                         <th class='text-center align-middle bg-info' scope="col">Serial number</th>
                        
                         <th  style="width: 7%"class='text-center align-middle bg-info' scope="col">Maker</th>
@@ -158,7 +162,9 @@
                             @endif
                             <td class='text-center'>{{$device['inventory_number']}}</td>
                             <!-- процесс -->
-                           
+                            @if($device_type['id'] == '3')
+                                <td class='text-center'>{{$device['ordin_nmb']}}</td>
+                            @endif
                             <td class='text-center'>{{$device['serial_number']}}</td>
                             <td class='text-center'>{{Str::upper($device['maker'])}}</td>
                             @if($device_type['id'] == '4')   

@@ -18,7 +18,7 @@ class ReportController extends Controller
                $valid_dates = array();
               
                foreach($validations as $validation){
-                    $valid_dates[$mini->inventory_number ][] = ['type'=>$validation->type,'date'=>$validation->start_date];
+                    $valid_dates[$mini->inventory_number.':'.$mini->model ][] = ['type'=>$validation->type,'date'=>$validation->start_date];
                 
                }
                $result[] =  $valid_dates;
