@@ -40,6 +40,7 @@ class DevicesController extends AdminController
         $grid->column('inventory_number', __('Inventory number'));
         $grid->column('maker', __('Maker'));
         $grid->column('project', __('Project'));
+        $grid->column('ordin_nmb', __('Storage cell'));
         $grid->column('model', __('Model'));
         $grid->column('push_back', __('Push back'));
         $grid->column('status', __('Status'));
@@ -47,7 +48,7 @@ class DevicesController extends AdminController
         $grid->column('start_date', __('Start date'));
         $grid->column('prev_valid_date', __('Prev valid date'));
         $grid->column('next_valid_date', __('Next valid date'));
-        $grid->column('info_img', __('Imfo imeage'));
+        $grid->column('info_img', __('Info imeage'));
         $grid->column('data_sheet_path', __('Data sheet'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
@@ -95,6 +96,7 @@ class DevicesController extends AdminController
         $show->field('inventory_number', __('Inventory number'));
         $show->field('maker', __('Maker'));
         $show->field('project', __('Project'));
+        $show->field('ordin_nmb', __('Storage cell'));
         $show->field('model', __('Model'));
         $show->field('push_back', __('Push back'));
         $show->field('status', __('Status'));
@@ -125,6 +127,7 @@ class DevicesController extends AdminController
         $form->text('inventory_number', __('Inventory number'));
         $form->text('maker', __('Maker'));
         $form->text('project', __('Project'));
+        $form->text('ordin_nmb', __('Storage cell'));
         $form->text('model', __('Model'));
         $form->radio('push_back',__('Push back'))->options(['1' => 'Yes', '0'=> 'No'])->default('0');
         $form->image('info_img')->move('info_img');
