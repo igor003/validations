@@ -44,8 +44,8 @@
             <h5>Serial number:<b> {{$device->serial_number}}</b></h5>
             <h5>Inventory number: <b> {{$device->inventory_number}}</b></h5>
             <h5>Model: <b> {{$device->model}}</b></h5>
-            <h5>Total number of shuts: <b>{{$nmb_of_shuts}} pz</b></h5>
-            <h5>Last maintenance: <b>{{$last_valid}}</b></h5>
+            <h5>Total number of shuts: <b>{{ $nmb_of_shuts ?? ''}} pz</b></h5>
+            <h5>Last maintenance: <b>{{$last_valid ?? '' }}</b></h5>
   </div>  
  <div class="col text-center">
   <div>
@@ -78,7 +78,7 @@
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable(
-        <?php print_r($type_count)  ?>
+        <?php print_r($type_count ?? '')  ?>
 
 
 

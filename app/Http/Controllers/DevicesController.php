@@ -205,7 +205,7 @@ class DevicesController extends Controller
             $devices[$cnt]['inventory_number'] = $cur_device['inventory_number'];
             $devices[$cnt]['maker'] = $cur_device['maker'];
             $devices[$cnt]['model'] = $cur_device['model'];
-             $devices[$cnt]['ordin_nmb'] = $cur_device['ordin_nmb'];
+            $devices[$cnt]['ordin_nmb'] = $cur_device['ordin_nmb'];
             $date_start = new DateTime($cur_device['start_date']);
             $devices[$cnt]['start_date'] = $date_start->format('d-m-Y');
             $devices[$cnt]['status'] = $cur_device['status'];
@@ -324,8 +324,11 @@ class DevicesController extends Controller
             }
           
            
-            $device = Devices::find($id_disp);          
-            $nmb_of_shuts = $intervent['nmb_of_shuts']+(10000000*(int)$device->cycles)+(int)$device->tail;
+            $device = Devices::find($id_disp);   
+            
+                $nmb_of_shuts = $intervent['nmb_of_shuts']+(10000000*(int)$device->cycles)+(int)$device->tail;
+            
+            
             return view('type_inregistration',['last_valid'=>$intervent['date'],'nmb_of_shuts'=>$nmb_of_shuts,'type_count'=>json_encode($menten_types_count),'device'=>$device,'id'=>$id_type,'device_types'=>$device_type]);
         }else{
             return view('type_inregistration',['device'=>$device,'id'=>$id_type,'device_types'=>$device_type]);
