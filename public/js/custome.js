@@ -80,11 +80,11 @@ $( function() {
             $('.shuts').empty();
             $('.shuts').append('<label for="temper">Nmb of shuts</label><input value="" name="nmb_of_shuts" id="shuts" type="text" class="form-control ">')
             $('.shuts').show();
-            // if($('#cycle').is(':checked')){
-            //   $( "body" ).off( "change", "#shuts", get_shuts_on_input );
-            // }else{
-            //      get_shuts_on_input();
-            // }
+            if($('#cycle').is(':checked')){
+              $( "body" ).off( "change", "#shuts", get_shuts_on_input );
+            }else{
+                 get_shuts_on_input();
+            }
            
                 
         }else{
