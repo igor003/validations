@@ -129,6 +129,11 @@ class DevicesController extends Controller
         return Response::json($res); 
     }
 
+    public function get_count_of_shuts_mini(Request $request){
+        $last_intervention = Interventions::where('id_machine','=',$request->id)->latest('date')->first();
+        return Response::json($last_intervention);
+    }
+
     public function get_count_of_pices_pce($device_id,$device_number){
         $intervent = Interventions::where('id_machine','=',$device_id)->where('id_type','=','155')->orderBy('date', 'DESC')->first();
         if($intervent['nmb_of_pices'] !== NULL ){

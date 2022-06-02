@@ -1,6 +1,11 @@
 
 
 $( function() {
+
+
+
+
+
     var input = $('.inputfile' );
 
     var label    = input.next();
@@ -51,13 +56,21 @@ $( function() {
         defaultTime:'00:00'
     });
 
-    $('#type_machine').on('change',function(e){    
+    $('#type_machine').on('change',function(e){  
+       var val = $(this).val();
+        if(val == '3'){
+        
+            $('#devices').on('change',function(){
+                get_minis_shuts();
+            });
+      
+        }  
         e.preventDefault();
         var type_id = $('#type_machine').val();
 
         var type_mentenance = $('#type_mentenance').val();
         var all_mini = $('#show_all').val();
-        console.log( type_id);
+        
         if(type_id == ''){
             $('#devices').attr('disabled','disabled');
         }else{
@@ -309,6 +322,33 @@ function generate_hnml_interventions(data){
         }
         result +='</tr>';
     return result; 
+}
+function get_minis_shuts(){
+    var mini = $('#devices').val();
+    $.ajax({
+        url: '/get_mini_shuts',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id: mini,
+        },
+        success: function(data){
+      
+            $('.nmb_of_shuts_old').empty();
+            $('.nmb_of_shuts_old').append("<div class='h6 text-primary font-weight-bold shuts_mini' for='temper'>Last registration: "+data['nmb_of_shuts']+" shuts</div>");
+         
+        }
+    })
+    .done(function() {
+        console.log("success");
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
 }
 
 function get_interventions_list(){

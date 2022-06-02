@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
- Route::get('/home', 'DeviceTypesController@show')->name('home');
+Route::get('/home', 'DeviceTypesController@show')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
    
@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/device/info_download/{id}','DevicesController@download_info')->name('download_info');
     Route::get('/interv_excell_report','InterventionsController@report_generate_view')->name('interv_report_view');
+    
+    Route::post('/get_mini_shuts','DevicesController@get_count_of_shuts_mini')->name('get_minis_shuts');
+
     Route::post('/generate_interv_excell_report','InterventionsController@generate_report')->name('generate_report_excell');
     Route::post('/gener_excell_rep_filter','InterventionsController@filter_excell_report')->name('filter_excell_report');
     Route::post('/machine_count','DevicesController@get_machine_pices')->name('machine_pices');

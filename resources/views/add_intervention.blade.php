@@ -86,6 +86,8 @@
  				<div style="display:none" class="form-group temperature">
 					
 				</div>
+				<div class='nmb_of_shuts_old'>
+					</div>
 				<div style="display:none" class="form-group shuts">
 					
 				</div>

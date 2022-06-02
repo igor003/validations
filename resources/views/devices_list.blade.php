@@ -156,7 +156,11 @@
                    @foreach($devices as $device)
                         
                         <tr>
-                            <td class='text-center'><a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}"><button type="button" class="btn btn-outline-info">{{$device['number']}}</button></a></td> 
+                            <td class='text-center'>
+                                <a href="/type_inregistration/{{$device['id']}}/{{$device_type->id}}">
+                                    <button type="button" class="btn btn-outline-info">{{$device['number']}}</button>
+                                </a>
+                            </td> 
                             @if($device_type['id'] == '3')
                                 <td class='text-center'>{{$device['project']}}</td>
                             @endif
