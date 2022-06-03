@@ -152,7 +152,7 @@
                     </tr>
                 </thead>
                 <tbody>
- 
+
                    @foreach($devices as $device)
                         
                         <tr>
@@ -290,7 +290,7 @@
                                                     <td class='text-center data_nok'>{{$device['mini_differ']}}</td>
                                                 @endif
                                             @elseif($device['project'] == 'P1(TSA)')
-                                                @if($device['mini_differ'] < $miniTargetP1)
+                                                @if($device['mini_differ'] < $miniTargetP1-$miniDifferP1)
                                                     <td class='text-center data_ok'>{{$device['mini_differ']}}</td>
                                                 @elseif($device['mini_differ'] > ($miniTargetP1-$miniDifferP1 ) && $device['mini_differ'] < $miniTargetP1 )
                                                     <td class='text-center data_warn'>{{$device['mini_differ']}}</td>
